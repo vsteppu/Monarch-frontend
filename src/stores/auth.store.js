@@ -1,6 +1,6 @@
 import { ref, watch } from "vue";
 import { defineStore } from "pinia";
-import { loginAPI } from "@/api/auth-api";
+import { loginAPI, registerAPI } from "@/api/auth-api";
 import { useAuthState } from "@/composables/auth";
 import { useGoogleToken } from "@/stores/recaptcha.js";
 import { useRouter } from "vue-router";
@@ -13,22 +13,11 @@ export const useAuthStore = defineStore('authStore',()=>{
     const user = ref(getUser() || null)
     const authenticated = ref(isAuthenticated() || false)
 
-    const registerUser = async (user) => {
+    const registerUser = async (data) => {
         const token = await googleToken.getToken();
-        const { email, password } = user
+        const { name, email, password } = data
 
-        const response = await loginAPI({ email, password, token });
-        if (response.success) router.push({ path: "/" });
-        return response;
-    }
-
-    const loginUser = async (data) => {
-        const token = await googleToken.getToken();
-        console.log('token: ', token);
-
-        const { email, password } = data
-
-        const response = await loginAPI({ email, password, token });
+        const response = await registerAPI({ name, email, password, token });
 
         if (response.success) {
             authenticated.value = true
@@ -36,6 +25,24 @@ export const useAuthStore = defineStore('authStore',()=>{
             router.push({ path: "/" })
         }
         return response;
+    }
+
+    const loginUser = async (data) => {
+        try{
+            const token = await googleToken.getToken();
+            const { email, password } = data
+
+            const response = await loginAPI({ email, password, token });
+
+            if (response.success) {
+                authenticated.value = true
+                user.value = response?.user
+                router.push({ path: "/" })
+            }
+            return response;
+        } catch (err) {
+            throw err
+        }
     }
 
     const logoutUser = () => {

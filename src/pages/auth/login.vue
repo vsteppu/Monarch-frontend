@@ -4,7 +4,7 @@
             <h1 class="text-2xl font-extralight">
                 Login
             </h1>
-            <logo class="size-6 invert" />
+            <logo class="size-6" />
         </div>
         <div>
             <h2 class="text-xl font-thin mb-1">
@@ -95,7 +95,8 @@ const loginHandler = async () => {
         })
         if(response.success) notificationStore.notify("Login was successful","success")
     } catch (err) {
-        notificationStore.notify( err.message, "error")
+        const data = err.response.data
+        notificationStore.notify( data.message, "error")
         throw err
     } finally {
         loading.value = false

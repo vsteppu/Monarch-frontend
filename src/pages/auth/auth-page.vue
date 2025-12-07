@@ -1,6 +1,5 @@
 <template>
     <div class="w-full h-screen flex justify-center">
-        <GoogleReCaptcha />
         <div 
             :class="['w-80 p-4 my-auto flex flex-col gap-2 rounded']"
         >
@@ -37,7 +36,6 @@
 
 <script setup>
 import { ref } from "vue";
-import GoogleReCaptcha from '@/library/google-recaptcha.vue'
 import Login from './login.vue'
 import Register from './register.vue'
 

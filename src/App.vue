@@ -11,3 +11,9 @@
 import Notification from './components/notification.vue'
 import NavBar from './components/nav-bar.vue'
 </script>
+
+<style scooped>
+.grecaptcha-badge {
+    display: none !important;
+}
+</style>

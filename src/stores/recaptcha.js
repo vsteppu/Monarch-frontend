@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
 import { ref, watch } from "vue";
+import { isGoogleRecaptchaEnabled } from "./helpers";
 
 export const useGoogleToken = defineStore( "cloudflare-turnstile", () => {
     const siteKey = import.meta.env.VITE_GOOGLE_SITE_KEY;
-    const isRecaptchaEnabled = import.meta.env.VITE_GOOGLE_RECAPTCHA_ENABLED === 'true'
     const reCaptchaToken = ref(null);
     const WIDGET_CONTAINER = 'reCaptchaContainer';
     const widgetId = ref(null);
@@ -20,6 +20,8 @@ export const useGoogleToken = defineStore( "cloudflare-turnstile", () => {
     };
 
     const getToken = async() => {
+        if (!isGoogleRecaptchaEnabled()) return;
+
         if(widgetId.value == null) {
             await insertWidget();
         }

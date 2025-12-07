@@ -6,6 +6,9 @@ const { setUser } = useAuthState()
 
 const registerAPI = async (user) => {
     const response = await axios.post(`${api}/register`, user)
+    if (response?.data?.success) { 
+        setUser(response?.data)
+    }
     return response?.data
 }
 
@@ -17,8 +20,8 @@ const loginAPI = async (user) => {
     return response?.data
 }
 
-const userAPI = async (user) => {
-    const response = await axios.post(`${api}/user`, user)
+const getUserAPI = async (id) => {
+    const response = await axios.get(`${api}/user?id=${id}`)
     return response?.data
 }
 
@@ -26,5 +29,5 @@ const userAPI = async (user) => {
 export {
     registerAPI,
     loginAPI,
-    userAPI,
+    getUserAPI,
 }

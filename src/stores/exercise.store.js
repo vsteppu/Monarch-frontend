@@ -25,8 +25,11 @@ export const useExerciseStore = defineStore( "exercise-store", () => {
     const addDailyExercises = async(exercises) => {
         try{
             const data = { user_id: user.id, exercises }
-
-            return await postExercisesAPI(data)
+            const response = await postExercisesAPI(data)
+            if (response.success){
+                notificationStore.notify("Exercise was added", "success")
+            }
+            return response
         } catch (err) {
             throw err
         }

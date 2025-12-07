@@ -100,6 +100,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { registerAPI } from "@/api/auth-api";
+import { useAuthStore } from "@/stores/auth.store";
 import { regularInputs } from "@/assets/inputs";
 
 import Logo from "@/assets/icons/logo.vue";
@@ -110,10 +111,11 @@ import { EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/outline';
 
 const router = useRouter();
 const googleToken = useGoogleToken();
+const authStore = useAuthStore();
 const notificationStore = useNotificationStore();
 
 const name = ref("Vlad");
-const email = ref("vlad@gmail.com");
+const email = ref("vurado@gmail.com");
 const password = ref("123456Aa.");
 const confirmPassword = ref("123456Aa.");
 const loading = ref(false);
@@ -130,28 +132,26 @@ const handleShowConfirmPassword = () => {
 
 const registerHandler = async () => {
     loading.value = true;
-    const token = await googleToken.getToken();
     try {
         if (password.value !== confirmPassword.value) {
             console.error({message: `Passwords don't match`});
             return;
         }
 
-        const response = await registerAPI({
+        const response = await authStore.registerUser({
             name: name.value,
             email: email.value,
             password: password.value,
-            token,
         });
         
         if (response.success) {
-            router.push({ path: "/" });
             notificationStore.notify('Register was successful', 'success')
         }
         return response;
     } catch (err) {
-        console.error("error: ", err.message);
-        notificationStore.notify('Register failed', 'error')
+        const data = err.response.data
+        notificationStore.notify(data.message, 'error')
+        console.error("error: ", err);
         loading.value = false;
     } finally {
         loading.value = false;

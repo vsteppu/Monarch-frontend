@@ -1,6 +1,10 @@
+import { getUserAPI } from "@/api/auth-api"
+
 export const useAuthState = () => {
     
     const setUser = (user) => {
+/*         const user = getUserAPI()
+        console.log('user: ', user); */
         localStorage.setItem('user', JSON.stringify(user))
     }
 
