@@ -1,18 +1,25 @@
 <template>
     <div
-        class="text-2xl w-2/5 font-thin font-montserrat flex flex-col justify-center"
+        class=" text-base md:text-2xl w-full md:w-2/5 font-thin flex flex-col justify-center"
     >
         <h1>Daily exercise</h1>
         <div
             v-for="exercise in dailyExercise"
         >
-            <div class="flex items-center justify-between mb-2 font-montserrat">
+            <div class="flex items-center justify-between">
                 <h3>{{ exercise?.display_name }}</h3>
 
                 <div class="flex items-center justify-center">
                     {{ exercise?.value }} / {{ defaultExerciseToDo(exercise?.unit_type)}}
                     {{ exercise?.unit_type }}
-                    <div class=" flex flex-col text-center px-3 ml-3 cursor-pointer">
+                    <button
+                        v-if="exercise?.unit_type == 'km'"
+                        @click="showRunningModalHandler"
+                        class="p-3 my-3 bg-stone-800 ml-5 cursor-pointer"
+                    >
+                        RUN
+                    </button>
+                    <div v-else class=" flex flex-col text-center px-3 ml-3 cursor-pointer">
                         <span
                             @click="() => increeseCount(exercise?.name)"
                         >
@@ -42,56 +49,23 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
+import { storeToRefs } from "pinia";
 import { useExerciseStore } from "@/stores/exercise.store.js";
-import { DAILY_EXERCISE } from "@/stores/store";
-import { useNotificationStore } from "@/stores/notification.store";
+import { DAILY_EXERCISE, TRAINING_LEVELS } from "@/stores/store";
+import { useAuthState } from "@/composables/auth";
+import { useRouter } from "vue-router";
+
 import Divider from '@/components/divider.vue'
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/vue/24/outline";
 
+const { getUser } = useAuthState();
+const router = useRouter();
 const exerciseStore = useExerciseStore();
+const { showRunningModal } = storeToRefs(exerciseStore)
+
 const dailyExercise = ref(DAILY_EXERCISE)
-
-const userStatus = ref('beginner');
-const defaultExercisesByRank = ref([
-    {
-        id: 1,
-        name: "beginner",
-        displayName: "Beginner",
-        repetitions: 20,
-        running_km: 2,
-    },
-    {
-        id: 2,
-        name: "basic",
-        displayName: "Basic",
-        repetitions: 40,
-        running_km: 4,
-    },
-    {
-        id: 3,
-        name: "intermediate",
-        displayName: "Intermediate",
-        repetitions: 60,
-        running_km: 6,
-    },
-    {
-        id: 4,
-        name: "advanced",
-        displayName: "Advanced",
-        repetitions: 80,
-        running_km: 8,
-    },
-    {
-        id: 5,
-        name: "elite",
-        displayName: "Elite",
-        repetitions: 100,
-        running_km: 10,
-    }
-])
-
-const loading = ref(false);
+const userStatus = ref(getUser()?.meta?.status);
 
 const increeseCount = ( name ) => {
     const exerciseIndex = dailyExercise.value.findIndex(item => item.name === name)
@@ -113,12 +87,16 @@ const decreeseCount = ( name ) => {
 };
 
 const defaultExerciseToDo = (type) => {
-    const exercises = defaultExercisesByRank.value.find(exercise => exercise.name == userStatus.value)
+    const exercises = TRAINING_LEVELS.find(exercise => exercise.name == userStatus.value)
     return type == 'reps' ? exercises.repetitions : exercises.running_km
 };
 
 const submitExercises = async() => {
     const data = dailyExercise.value
     await exerciseStore.addDailyExercises(data)
+};
+
+const showRunningModalHandler = async() => {
+    router.push({name: 'running'})
 };
 </script>

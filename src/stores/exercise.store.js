@@ -10,11 +10,14 @@ export const useExerciseStore = defineStore( "exercise-store", () => {
     const user = getUser()
 
     const workoutHistory = ref(null)
+    const userName = ref(null)
+    const showRunningModal = ref(false);
 
     const fetchDailyExercises = async() => {
         try{
-            const response = await getExercisesAPI()
+            const response = await getExercisesAPI(user.id)
             workoutHistory.value = response?.exercises
+            console.log('workoutHistory.value: ', workoutHistory.value);
             return workoutHistory.value
         } catch (err) {
             console.error(err)
@@ -54,6 +57,8 @@ export const useExerciseStore = defineStore( "exercise-store", () => {
 
     return {
         workoutHistory,
+        userName,
+        showRunningModal,
         
         fetchDailyExercises,
         addDailyExercises,

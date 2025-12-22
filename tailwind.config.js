@@ -1,3 +1,5 @@
+import plugin from 'tailwindcss/plugin'
+
 export default {
     theme: {
         extend: {
@@ -12,5 +14,6 @@ export default {
                 'input-gray':'#cccccc',
             }
         },
+        
     },
 }

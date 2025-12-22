@@ -84,7 +84,7 @@
                 />
                 <p 
                     v-else 
-                    class="my-3"
+                    class="my-3 hover:via-violet-400"
                 >
                     Register
                 </p>

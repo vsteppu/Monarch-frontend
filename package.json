@@ -21,6 +21,7 @@
     "cookie-parser": "^1.4.7",
     "heroicons": "^2.2.0",
     "jsonwebtoken": "^9.0.2",
+    "ol": "^10.7.0",
     "pinia": "^3.0.4",
     "router": "^2.2.0",
     "tailwind": "^2.3.1",

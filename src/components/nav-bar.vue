@@ -9,8 +9,13 @@
         <router-link 
             :to="{ name: 'home' }"
         >
+            <span
+                class="hidden md:block font-extrabold text-2xl"
+            >
+                MONARCH
+            </span>
             <Logo
-                class="size-7"
+                class="size-7 md:hidden"
             />
         </router-link>
         <div
@@ -28,6 +33,18 @@
                 class="hover:text-violet-300"
             >
                 Progress
+            </router-link>
+            <router-link 
+                :to="{ name: 'workouts' }"
+                class="hover:text-violet-300"
+            >
+                Workouts
+            </router-link>
+            <router-link 
+                :to="{ name: 'running' }"
+                class="hover:text-violet-300"
+            >
+                Running
             </router-link>
             <button
                 @click="logout"

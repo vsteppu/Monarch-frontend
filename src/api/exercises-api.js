@@ -2,8 +2,8 @@ import axios from "axios";
 
 const api = import.meta.env.VITE_API_URL || '/api'
 
-const getExercisesAPI = async () => {
-    const response = await axios.get(`${api}/get-exercises`)
+const getExercisesAPI = async (id) => {
+    const response = await axios.get(`${api}/get-exercises?id=${id}`)
     return response?.data
 }
 

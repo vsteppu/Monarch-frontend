@@ -34,6 +34,7 @@
 
 <script setup>
 import { computed, watch } from "vue";
+import { sanitizeDate } from "@/stores/helpers";
 
 const workoutDetails = defineModel()
 watch(workoutDetails, () => {
@@ -42,10 +43,4 @@ watch(workoutDetails, () => {
 
 const exercises = computed(() => workoutDetails.value?.daily_exercise)
 const workoutDate = computed(() => { return sanitizeDate(workoutDetails.value?.createdAt) })
-
-const sanitizeDate = (param) => {
-    const parseDate = new Date(param);
-    return parseDate.toLocaleDateString("en-GB");
-};
-sanitizeDate();
 </script>
