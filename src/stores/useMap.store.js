@@ -9,39 +9,44 @@ export const useOpenLayerMapStore = defineStore('openLayerMapStore', () => {
     const longitude = ref(null)
     const latitude = ref(null)
     const error = ref(null)
+    const distance = ref(null)
+    const routeLayer = ref(null)
+    const routeCoords = ref([])
 
     const getLocation = () => {
-        return new Promise((resolve, reject) => {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        geoLocation.value = {
-                            latitude: position.coords.latitude,
-                            longitude: position.coords.longitude,
-                            accuracy: position.coords.accuracy
-                        }
-                        loading.value = false
-                    },
-                    (err) => {
-                        error.value = err.message
-                        loading.value = false
-                    },
-                    {
-                        enableHighAccuracy: true,
-                        timeout: 10000,
-                        maximumAge: 600000
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(
+                (position) => {
+                    geoLocation.value = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                        accuracy: position.coords.accuracy
                     }
-                )
-            } else {
-                console.error("Something's wrong");
-            }
-        })
+                    loading.value = false
+                },
+                (err) => {
+
+                    error.value = err.message
+                    loading.value = false
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 600000
+                }
+            )
+        } else {
+            console.error("Something's wrong");
+        }
     }
+    watch(geoLocation, (newVal) => {
+        console.log('newVal: ', newVal);
+    })
 
     onMounted(async() => {
         loading.value = true
         try {
-            geoLocation.value = JSON.parse(localStorage.getItem('geolocation'))
+            //geoLocation.value = JSON.parse(localStorage.getItem('geolocation'))
         } catch (err) {
             throw err
         } finally {
@@ -57,6 +62,8 @@ export const useOpenLayerMapStore = defineStore('openLayerMapStore', () => {
         longitude,
         latitude,
         error,
+        distance,
+        routeLayer,
 
         getLocation,
         //baseMapLayer,

@@ -1,20 +1,28 @@
 
 <template>
-    <div class="h-screen w-full flex items-center justify-center">
+    <div class="h-screen w-full flex pt-[52px] items-center justify-center">
         <div v-if="loading" class="h-screen w-full">
             <Loading class="size-8"/>
         </div>
-        <div v-else class=" w-2/3 h-2/3 flex flex-col">
-            <div class="flex justify-between w-full">
-                <div class="text-5xl">
+        <div v-else class="w-full md:w-2/3 h-full md:h-2/3 flex flex-col bg-amber-400">
+            <div class="flex justify-between w-full text-black p-2">
+                <div class="text-3xl md:text-5xl">
                     Timer
                 </div>
-                <div class="text-6xl w-full bg-stone-900 ">
+                <div class=" text-3xl md:text-6xl w-full text-end">
                     {{ hours + ' / ' + minutes + ' / ' + seconds }}
                 </div>
             </div>
-            <div class="relative">
-                <div id="map" class="absolute w-full h-full"/>
+            <div class="flex justify-between w-full text-black p-2">
+                <div class="text-3xl md:text-5xl">
+                    Distance
+                </div>
+                <div class=" text-3xl md:text-6xl w-full text-end">
+                    {{ convertDistance(distance) }}
+                </div>
+            </div>
+            <div class="relative h-full">
+                <MapComponent class="h-full"/>
                 <div class="absolute bottom-0 flex w-full justify-center gap-9">
                     <button
                         v-if="!startRun"
@@ -53,21 +61,17 @@ import { PlayIcon, PauseIcon, StopIcon, } from "@heroicons/vue/24/outline";
 
 import { useOpenLayerMapStore } from '@/stores/useMap.store.js';
 import Loading from '@/assets/icons/loading.vue'
-const openLayerMapStore = useOpenLayerMapStore();
+import MapComponent from '../components/map-component.vue'
 
 const exerciseStore = useExerciseStore();
+const openLayerMapStore = useOpenLayerMapStore();
+const { distance } = storeToRefs(openLayerMapStore)
 const { showRunningModal } = storeToRefs(exerciseStore)
-const { map, geoLocation } = storeToRefs(openLayerMapStore)
 const { seconds, minutes, hours, startTimer, stopTimer} = useTimer()
 
 const loading = ref(false)
 const startRun = ref(false)
 const pauseRun = ref(false)
-const marker = ref(null)
-
-const coords = computed(() => geoLocation.value) 
-console.log('coords: ', coords.value);
-let elementId
 
 const startRunningHandler = () => {
     pauseRun.value = false
@@ -86,37 +90,7 @@ const stopRunningHandler = () => {
     pauseRun.value = false
 }
 
-const closeModal = (value) => {
-    showRunningModal.value = value
+const convertDistance = (num) => {
+    return Math.round(num * 100) / 100
 }
-
-onMounted(async() => {
-    map.value = new ol.Map({
-        target: 'map',
-        layers: [
-            new ol.layer.Tile({
-                source: new ol.source.TileJSON({
-                    url: 'https://api.maptiler.com/maps/streets-v4/tiles.json?key=9tLWFhoeQRaENlHmbSsR',
-                    tileSize: 256,
-                })
-            })
-        ],
-        view: new ol.View({
-            center: ol.proj.fromLonLat([coords.value.longitude, coords.value.latitude]),
-            zoom: 13
-        })
-    })
-    
-    marker.value = new ol.layer.Vector({
-        source: new ol. source. Vector({
-            features: [
-                new ol.Feature({
-                    geometry: new ol.geom.Point(
-                        ol.proj.fromLonLat([coords.value.longitude, coords.value.latitude])
-                    )
-                })
-            ]
-        }),
-    })
-})
 </script>
