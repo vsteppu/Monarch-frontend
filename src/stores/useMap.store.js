@@ -1,27 +1,28 @@
+import * as maptilersdk from '@maptiler/sdk';
+import { ref, watch, onMounted } from 'vue'
 import { defineStore } from 'pinia';
-import { ref, watch } from 'vue'
+import { Marker } from '@maptiler/sdk';
 
 export const useOpenLayerMapStore = defineStore('openLayerMapStore', () => {
+    const apiKey = import.meta.env.VITE_MAPTILER_API_KEY
+
+    const mapContainer = ref(null)
     const running = ref(false)
     const map = ref(null)
     const geoLocation = ref(null)
     const distance = ref(null)
     const routeCoords = ref([])
-
     const error = ref(null)
 
     const getLocation = () => {
-        //if (!running.value) return;
-
         if (navigator.geolocation) {
-            navigator.geolocation.watchPosition(
+            navigator.geolocation.getCurrentPosition(
                 (position) => {
                     geoLocation.value = {
                         longitude: position.coords.longitude,
                         latitude: position.coords.latitude,
                         accuracy: position.coords.accuracy
                     }
-                    routeCoords.value.push([geoLocation.value.longitude, geoLocation.value.latitude])
                 },
                 (err) => {
                     error.value = err.message
@@ -37,6 +38,119 @@ export const useOpenLayerMapStore = defineStore('openLayerMapStore', () => {
         }
     }
 
+    const trackMovement = () => {
+        if (!running.value) return;
+
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(
+                (position) => {
+                    routeCoords.value.push([position.coords.longitude, position.coords.latitude])
+                },
+                (err) => {
+                    error.value = err.message
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 600000
+                }
+            )
+        } else {
+            console.error("Something's wrong");
+        }
+    }
+
+    const setMap = (newVal) => {
+        const {latitude, longitude} = newVal
+
+        if (newVal){
+            map.value = new maptilersdk.Map({
+                apiKey,
+                container: mapContainer.value,
+                center: [longitude, latitude],
+                zoom: 17
+            });
+
+
+            new Marker({
+                color: '#ff0000',
+                draggable: false,
+                scale: 0.7
+            })
+                .setLngLat([longitude, latitude])
+                .addTo(map.value)
+        }
+    }
+
+    
+
+    const setRunningPath = () => {
+        trackMovement()
+
+        map.value.on('load', () => { 
+            const geojson = {
+                'type': 'FeatureCollection',
+                'features': [
+                    {
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'LineString',
+                            'properties': {},
+                            'coordinates': routeCoords.value
+                        }
+                    }
+                ]
+            };
+            console.log('geojson: ', geojson);
+            
+            map.value.addSource('LineString', {
+                type: 'geojson',
+                data: geojson
+            });
+            //map.value.getSource
+            
+            map.value.addLayer({
+                'id': 'LineString',
+                'type': 'line',
+                'source': 'LineString',
+                'layout': {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                'paint': {
+                    'line-color': '#000',
+                    'line-width': 3
+                }
+            });
+        })
+    }
+    
+    const updateRunningPath = () => {
+        if (!map.value) return
+        const source = map.value.getSource('LineString')
+
+        if (source) {
+            source.setData({
+                type: 'FeatureCollection',
+                features: [{
+                type: 'Feature',
+                geometry: {
+                    type: 'LineString',
+                    coordinates: coords
+                }
+                }]
+            })
+        }
+    }
+
+    watch(geoLocation, (newVal) => {
+        setMap(newVal)
+    }, {once:true})
+
+    watch(routeCoords, () => {
+        updateRunningPath()
+    }, { deep: true })
+
     watch(geoLocation, () => {
         console.log('routeCoords.value: ', routeCoords.value);
     })
@@ -46,7 +160,11 @@ export const useOpenLayerMapStore = defineStore('openLayerMapStore', () => {
         geoLocation,
         routeCoords,
         distance,
+        mapContainer,
 
         getLocation,
+        setMap,
+        setRunningPath,
+        trackMovement,
     }
 })
