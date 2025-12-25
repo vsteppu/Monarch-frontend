@@ -14,6 +14,20 @@ export const useOpenLayerMapStore = defineStore('openLayerMapStore', () => {
     const routeCoords = ref([])
     const error = ref(null)
 
+    const geojson = {
+        'type': 'FeatureCollection',
+        'features': [
+            {
+                'type': 'Feature',
+                'geometry': {
+                    'type': 'LineString',
+                    'properties': {},
+                    'coordinates': routeCoords.value
+                }
+            }
+        ]
+    };
+
     const getLocation = () => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -82,27 +96,62 @@ export const useOpenLayerMapStore = defineStore('openLayerMapStore', () => {
         }
     }
 
-    
-
     const setRunningPath = () => {
         trackMovement()
-
+/*
         map.value.on('load', () => { 
-            const geojson = {
-                'type': 'FeatureCollection',
-                'features': [
-                    {
-                        'type': 'Feature',
-                        'geometry': {
-                            'type': 'LineString',
-                            'properties': {},
-                            'coordinates': routeCoords.value
-                        }
-                    }
-                ]
-            };
-            console.log('geojson: ', geojson);
+            map.value.addSource('LineString', {
+                type: 'geojson',
+                data: geojson
+            });
+            //map.value.getSource
             
+             
+            map.value.addLayer({
+                'id': 'LineString',
+                'type': 'line',
+                'source': 'LineString',
+                'layout': {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                'paint': {
+                    'line-color': '#000',
+                    'line-width': 3
+                }
+            }); 
+        })
+        */
+    }
+    
+    /* const updateRunningPath = () => {
+
+        if (!map.value) return
+        const source = map.value.getSource('LineString')
+
+        if (source) {
+            source.setData({
+                type: 'FeatureCollection',
+                features: [{
+                type: 'Feature',
+                geometry: {
+                    type: 'LineString',
+                    coordinates: coords
+                }
+                }]
+            })
+        }
+    } */
+
+    watch(geoLocation, (newVal) => {
+        setMap(newVal)
+    }, {once:true})
+
+    watch(routeCoords, () => {
+        console.log('#1');
+        //updateRunningPath()
+        
+        map.value.on('load', () => { 
             map.value.addSource('LineString', {
                 type: 'geojson',
                 data: geojson
@@ -123,37 +172,7 @@ export const useOpenLayerMapStore = defineStore('openLayerMapStore', () => {
                 }
             });
         })
-    }
-    
-    const updateRunningPath = () => {
-        if (!map.value) return
-        const source = map.value.getSource('LineString')
-
-        if (source) {
-            source.setData({
-                type: 'FeatureCollection',
-                features: [{
-                type: 'Feature',
-                geometry: {
-                    type: 'LineString',
-                    coordinates: coords
-                }
-                }]
-            })
-        }
-    }
-
-    watch(geoLocation, (newVal) => {
-        setMap(newVal)
-    }, {once:true})
-
-    watch(routeCoords, () => {
-        updateRunningPath()
     }, { deep: true })
-
-    watch(geoLocation, () => {
-        console.log('routeCoords.value: ', routeCoords.value);
-    })
     
     return {
         map,
