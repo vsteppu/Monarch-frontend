@@ -5,10 +5,10 @@ export const useOpenLayerMapStore = defineStore('openLayerMapStore', () => {
     const running = ref(false)
     const map = ref(null)
     const geoLocation = ref(null)
-    const error = ref(null)
     const distance = ref(null)
-    const routeLayer = ref(null)
     const routeCoords = ref([])
+
+    const error = ref(null)
 
     const getLocation = () => {
         //if (!running.value) return;
@@ -17,16 +17,14 @@ export const useOpenLayerMapStore = defineStore('openLayerMapStore', () => {
             navigator.geolocation.watchPosition(
                 (position) => {
                     geoLocation.value = {
-                        latitude: position.coords.latitude,
                         longitude: position.coords.longitude,
+                        latitude: position.coords.latitude,
                         accuracy: position.coords.accuracy
                     }
                     routeCoords.value.push([geoLocation.value.longitude, geoLocation.value.latitude])
                 },
                 (err) => {
-
                     error.value = err.message
-                    loading.value = false
                 },
                 {
                     enableHighAccuracy: true,
@@ -42,26 +40,11 @@ export const useOpenLayerMapStore = defineStore('openLayerMapStore', () => {
     watch(geoLocation, () => {
         console.log('routeCoords.value: ', routeCoords.value);
     })
-
-    onMounted(async() => {
-        loading.value = true
-        try {
-            //geoLocation.value = JSON.parse(localStorage.getItem('geolocation'))
-        } catch (err) {
-            throw err
-        } finally {
-            loading.value = false
-        }
-    })
-
+    
     return {
-        loading,
         map,
         geoLocation,
-        location,
-        longitude,
-        latitude,
-        error,
+        routeCoords,
         distance,
 
         getLocation,
