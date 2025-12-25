@@ -1,30 +1,27 @@
-import * as maptilersdk from '@maptiler/sdk';
-import { ref, watch, onMounted } from 'vue'
 import { defineStore } from 'pinia';
-import { onMounted, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 
 export const useOpenLayerMapStore = defineStore('openLayerMapStore', () => {
-    const loading = ref(false)
+    const running = ref(false)
     const map = ref(null)
     const geoLocation = ref(null)
-    const location = ref(null)
-    const longitude = ref(null)
-    const latitude = ref(null)
     const error = ref(null)
     const distance = ref(null)
     const routeLayer = ref(null)
     const routeCoords = ref([])
 
     const getLocation = () => {
+        //if (!running.value) return;
+
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
+            navigator.geolocation.watchPosition(
                 (position) => {
                     geoLocation.value = {
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude,
                         accuracy: position.coords.accuracy
                     }
-                    loading.value = false
+                    routeCoords.value.push([geoLocation.value.longitude, geoLocation.value.latitude])
                 },
                 (err) => {
 
@@ -41,8 +38,9 @@ export const useOpenLayerMapStore = defineStore('openLayerMapStore', () => {
             console.error("Something's wrong");
         }
     }
-    watch(geoLocation, (newVal) => {
-        console.log('newVal: ', newVal);
+
+    watch(geoLocation, () => {
+        console.log('routeCoords.value: ', routeCoords.value);
     })
 
     onMounted(async() => {
@@ -65,13 +63,7 @@ export const useOpenLayerMapStore = defineStore('openLayerMapStore', () => {
         latitude,
         error,
         distance,
-        routeLayer,
 
         getLocation,
-        //baseMapLayer,
-        //iconStyle,
-        //marker,
-        //vectorSource,
-        //markerVectorLayer,
     }
 })

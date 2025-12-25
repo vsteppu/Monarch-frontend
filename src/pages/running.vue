@@ -5,27 +5,25 @@
             <Loading class="size-8"/>
         </div>
         <div v-else class="w-full md:w-2/3 h-full md:h-2/3 flex flex-col bg-amber-400">
-            <div class="p-4">
-                <div class="flex justify-between w-full text-black ">
-                    <div class="text-3xl md:text-5xl">
-                        Timer
-                    </div>
-                    <div class=" text-3xl md:text-6xl w-full text-end">
-                        {{ hours + ' / ' + minutes + ' / ' + seconds }}
-                    </div>
+            <div class="flex justify-between w-full text-black p-2">
+                <div class="text-3xl md:text-5xl">
+                    Timer
                 </div>
-                <div class="flex justify-between w-full text-black">
-                    <div class="text-3xl md:text-5xl">
-                        Distance
-                    </div>
-                    <div class=" text-3xl md:text-6xl w-full text-end">
-                        {{ convertDistance(distance) }}
-                    </div>
+                <div class=" text-3xl md:text-6xl w-full text-end">
+                    {{ hours + ' / ' + minutes + ' / ' + seconds }}
+                </div>
+            </div>
+            <div class="flex justify-between w-full text-black p-2">
+                <div class="text-3xl md:text-5xl">
+                    Distance
+                </div>
+                <div class=" text-3xl md:text-6xl w-full text-end">
+                    {{ convertDistance(distance) }}
                 </div>
             </div>
             <div class="relative h-full">
-                <MapComponent class="h-full z-0"/>
-                <div class="absolute bottom-10 flex w-full justify-center gap-9">
+                <MapComponent class="h-full"/>
+                <div class="absolute bottom-0 flex w-full justify-center gap-9">
                     <button
                         v-if="!startRun"
                         @click="startRunningHandler"
@@ -78,7 +76,6 @@ const pauseRun = ref(false)
 const startRunningHandler = () => {
     pauseRun.value = false
     startRun.value = true
-    openLayerMapStore.setRunningPath()
     startTimer()
 }
 
