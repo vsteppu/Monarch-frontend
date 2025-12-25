@@ -73,6 +73,8 @@ const loading = ref(false)
 const startRun = ref(false)
 const pauseRun = ref(false)
 
+const element = document.createElement('div')
+
 const startRunningHandler = () => {
     pauseRun.value = false
     startRun.value = true

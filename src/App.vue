@@ -18,7 +18,6 @@ const openLayerMapStore = useOpenLayerMapStore()
 const { geoLocation } = storeToRefs(openLayerMapStore)
 
 onMounted(async() => {
-    console.log('geoLocation.value: ', geoLocation.value);
     await openLayerMapStore.getLocation()
 })
 </script>
