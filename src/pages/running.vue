@@ -105,4 +105,8 @@ const stopRunningHandler = () => {
     pauseRun.value = false
     mapTilerStore.completeRunningPath()
 }
+
+onMounted(() => {
+    mapTilerStore.getLocation()
+})
 </script>

@@ -16,10 +16,6 @@ import { storeToRefs } from 'pinia';
 
 const mapTilerStore = useMapTilerStore()
 const { geoLocation } = storeToRefs(mapTilerStore)
-
-onMounted(async() => {
-    await mapTilerStore.getLocation()
-})
 </script>
 
 <style scooped>
