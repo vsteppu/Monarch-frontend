@@ -128,7 +128,7 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
             if (routeCoords.value.length >= 2) {
                 calculateDistance(routeCoords.value, distance.value)
             }
-        }, 1000)
+        }, 5000)
     }
 
     const updateRunningPath = (coordinates) => {
