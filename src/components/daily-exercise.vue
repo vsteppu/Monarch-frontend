@@ -4,7 +4,7 @@
     >
         <h1>Daily exercise</h1>
         <div
-            v-for="exercise in DAILY_EXERCISE"
+            v-for="exercise in dailyExercises"
         >
             <div class="flex items-center justify-between">
                 <h3>{{ exercise?.display_name }}</h3>
@@ -49,10 +49,13 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useExerciseStore } from "@/stores/exercise.store.js";
-import { TRAINING_LEVELS } from "@/stores/store";
+import { 
+    DAILY_EXERCISE,
+    TRAINING_LEVELS
+} from "@/stores/store";
 import { useAuthState } from "@/composables/auth";
 import { useRouter } from "vue-router";
 
@@ -66,12 +69,14 @@ const { showRunningModal } = storeToRefs(exerciseStore)
 
 const userStatus = ref(getUser()?.meta?.status);
 
-const DAILY_EXERCISE = [
-    { name: 'push_ups', value: 0, display_name: 'Push ups', unit_type: 'reps' },
-    { name: 'sit_ups', value: 0, display_name: 'Sit ups', unit_type: 'reps' },
-    { name: 'squats', value: 0, display_name: 'Squats', unit_type: 'reps' },
-    { name: 'running', value: 0, display_name: 'Running', unit_type: 'km' },
-]
+//const DAILY_EXERCISE = [
+//    { name: 'push_ups', value: 0, display_name: 'Push ups', unit_type: 'reps' },
+//    { name: 'sit_ups', value: 0, display_name: 'Sit ups', unit_type: 'reps' },
+//    { name: 'squats', value: 0, display_name: 'Squats', unit_type: 'reps' },
+//    { name: 'running', value: 0, display_name: 'Running', unit_type: 'km' },
+//]
+
+const dailyExercises = computed(() => { return DAILY_EXERCISE})
 
 const increeseCount = ( name ) => {
     const exerciseIndex = DAILY_EXERCISE.findIndex(item => item.name === name)

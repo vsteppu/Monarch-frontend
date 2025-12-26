@@ -69,11 +69,7 @@ import MapComponent from '../components/map-component.vue'
 
 const exerciseStore = useExerciseStore();
 const mapTilerStore = useMapTilerStore();
-const { distance, routeCoords, sum,
-        pointToPoint,
-        traveledDistance,
-        convertToKM,
- } = storeToRefs(mapTilerStore)
+const { distance, routeCoords } = storeToRefs(mapTilerStore)
 const { showRunningModal } = storeToRefs(exerciseStore)
 const { seconds, minutes, hours, startTimer, stopTimer} = useTimer()
 
