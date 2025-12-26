@@ -4,7 +4,7 @@
     >
         <h1>Daily exercise</h1>
         <div
-            v-for="exercise in dailyExercise"
+            v-for="exercise in DAILY_EXERCISE"
         >
             <div class="flex items-center justify-between">
                 <h3>{{ exercise?.display_name }}</h3>
@@ -64,26 +64,25 @@ const router = useRouter();
 const exerciseStore = useExerciseStore();
 const { showRunningModal } = storeToRefs(exerciseStore)
 
-const dailyExercise = ref(DAILY_EXERCISE)
 const userStatus = ref(getUser()?.meta?.status);
 
 const increeseCount = ( name ) => {
-    const exerciseIndex = dailyExercise.value.findIndex(item => item.name === name)
-    let updateValue = dailyExercise.value[exerciseIndex]
+    const exerciseIndex = DAILY_EXERCISE.findIndex(item => item.name === name)
+    let updateValue = DAILY_EXERCISE[exerciseIndex]
     updateValue.value = name != 'running' 
         ? updateValue.value + 5
         : updateValue.value + 1
     
-    dailyExercise.value[exerciseIndex] = updateValue
+    DAILY_EXERCISE[exerciseIndex] = updateValue
 };
 
 const decreeseCount = ( name ) => {
-    const exerciseIndex = dailyExercise.value.findIndex(item => item.name === name)
-    let updateValue = dailyExercise.value[exerciseIndex]
+    const exerciseIndex = DAILY_EXERCISE.findIndex(item => item.name === name)
+    let updateValue = DAILY_EXERCISE[exerciseIndex]
     if (updateValue.value !== 0) updateValue.value = name != 'running'
         ? updateValue.value - 5
         : updateValue.value -1
-    dailyExercise.value[exerciseIndex] = updateValue
+    DAILY_EXERCISE[exerciseIndex] = updateValue
 };
 
 const defaultExerciseToDo = (type) => {
@@ -93,7 +92,7 @@ const defaultExerciseToDo = (type) => {
 };
 
 const submitExercises = async() => {
-    const data = dailyExercise.value
+    const data = DAILY_EXERCISE
     await exerciseStore.addDailyExercises(data)
 };
 
