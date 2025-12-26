@@ -21,7 +21,7 @@
                     {{ distance }} km
                 </div>
             </div>
-            <div class="text-sm text-black">
+            <div class="text-sm text-black flex flex-col">
                 pointToPoint: {{ pointToPoint }}
                 traveledDistance {{ traveledDistance }}
                 convertToKM {{ convertToKM }}
