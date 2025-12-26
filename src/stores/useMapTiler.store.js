@@ -10,6 +10,7 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
     const geoLocation = ref(null)
     const distance = ref(0)
     const routeCoords = ref([])
+    const sum = ref([])
     const watchId = ref(null)
     const error = ref(null)
 
@@ -173,7 +174,7 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
         const firstPoint = new mapTilerSDK.LngLat(firstLong, firstLat)
         const secondPoint = new mapTilerSDK.LngLat(secondLong, secondLat)
 
-        const sum = firstPoint.distanceTo(secondPoint)
+        sum.value.push(firstPoint.distanceTo(secondPoint))
 
         distance.value = Math.round(previousDistance + sum) / 100
         console.log('distance.value: ', distance.value);
@@ -196,6 +197,7 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
         routeCoords,
         distance,
         mapContainer,
+        sum,
 
         getLocation,
         addMapHandler,
