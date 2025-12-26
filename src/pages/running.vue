@@ -21,10 +21,10 @@
                     {{ distance }} km
                 </div>
             </div>
-            <div class="text-sm text-black flex flex-col">
+            <!-- <div class="text-sm text-black flex flex-col">
                 <span>PointToPoint: {{ pointToPoint }}</span>
                 <span>traveledDistance: {{ traveledDistance }}</span>
-            </div>
+            </div> -->
             <div class="relative h-full">
                 <MapComponent class="h-full"/>
                 <div class="absolute bottom-15 right-0 flex w-full justify-center gap-9">

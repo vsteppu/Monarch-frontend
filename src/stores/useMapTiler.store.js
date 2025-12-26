@@ -1,6 +1,7 @@
 import * as mapTilerSDK from '@maptiler/sdk';
 import { defineStore } from 'pinia';
 import { ref, watch } from 'vue'
+import { testCoords } from './store';
 
 export const useMapTilerStore = defineStore('mapTilerStore', () => {
     const apiKey = import.meta.env.VITE_MAPTILER_API_KEY
@@ -17,6 +18,8 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
     const pointToPoint = ref(null)
     const traveledDistance =  ref(null)
     const convertToKM = ref(null)
+    
+    const count = ref(0)
 
     const geojson = {
             'type': 'FeatureCollection',
@@ -58,6 +61,11 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
     const watchLocationHandler = () => {
         if (!navigator.geolocation) return 
 
+        /* setInterval(() => {
+            if (count.value == 30) count.value = 0
+            routeCoords.value.push(testCoords[count.value])
+            count.value = count.value + 1
+        }, 2500) */
         watchId.value = navigator.geolocation.watchPosition((position) => {
                 routeCoords.value.push([position.coords.longitude, position.coords.latitude])
             },
@@ -178,12 +186,8 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
         const secondPoint = new mapTilerSDK.LngLat(secondLong, secondLat)
 
         pointToPoint.value = firstPoint.distanceTo(secondPoint)
-        traveledDistance.value = pointToPoint.value + distance.value
-
-        console.log('traveledDistance: ', traveledDistance);
-        console.log('convertToKM: ', convertToKM);
-
-        distance.value = traveledDistance.value.toFixed(2)
+        distance.value = distance.value + pointToPoint.value
+        distance.value = Math.round(distance.value) / 100
     }
 
     watch(geoLocation, (newVal) => { 
