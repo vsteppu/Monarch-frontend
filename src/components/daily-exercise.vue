@@ -88,7 +88,8 @@ const decreeseCount = ( name ) => {
 
 const defaultExerciseToDo = (type) => {
     const exercises = TRAINING_LEVELS.find(exercise => exercise.name == userStatus.value)
-    return type == 'reps' ? exercises.repetitions : exercises.running_km
+    console.log('exercises?.repetitions: ', exercises?.repetitions);
+    return type == 'reps' ? exercises?.repetitions : exercises?.running_km
 };
 
 const submitExercises = async() => {
