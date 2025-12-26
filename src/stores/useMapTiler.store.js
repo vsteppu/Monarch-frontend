@@ -178,7 +178,11 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
     watch(routeCoords, (coordinates) => {
         if (routeCoords.value == []) return;
         if (!map.value) return;
-        if (coordinates.length >= 2) calculateDistance(coordinates)
+        if (coordinates.length >= 2) {
+            setInterval(() => {
+                calculateDistance(coordinates)
+            }, 1000)
+        }
         
         updateRunningPath(coordinates)
     }, { deep: true })
