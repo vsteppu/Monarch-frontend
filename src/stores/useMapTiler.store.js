@@ -61,11 +61,13 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
     const watchLocationHandler = () => {
         if (!navigator.geolocation) return 
 
-        /* setInterval(() => {
-            if (count.value == 30) count.value = 0
-            routeCoords.value.push(testCoords[count.value])
-            count.value = count.value + 1
-        }, 2500) */
+        // <TESTING> : Recreate watchPosition behavior for testing
+        //setInterval(() => {
+        //    if (count.value == 49) count.value = 0
+        //    routeCoords.value.push(testCoords[count.value])
+        //    count.value = count.value + 1
+        //}, 2500)
+
         watchId.value = navigator.geolocation.watchPosition((position) => {
                 routeCoords.value.push([position.coords.longitude, position.coords.latitude])
             },
@@ -133,12 +135,6 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
                 'line-width': 4
             }
         });
-
-        setInterval(() => {
-            if (routeCoords.value.length >= 2) {
-                calculateDistance(routeCoords.value, distance.value)
-            }
-        }, 3000)
     }
 
     const updateRunningPath = (coordinates) => {
@@ -184,8 +180,8 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
         const secondPoint = new mapTilerSDK.LngLat(secondLong, secondLat)
 
         pointToPoint.value = firstPoint.distanceTo(secondPoint)
-        distance.value = distance.value + pointToPoint.value
-        distance.value = Math.round(distance.value) / 100
+        console.log('pointToPoint.value: ', pointToPoint.value);
+        distance.value = Math.round(distance.value + pointToPoint.value)
     }
 
     watch(geoLocation, (newVal) => { 
@@ -196,9 +192,9 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
         if (routeCoords.value == []) return;
         if (!map.value) return;
 
-        //if (routeCoords.value.length >= 2) {
-        //    calculateDistance(coordinates)
-        //}
+        if (routeCoords.value.length >= 2) {
+            calculateDistance(coordinates)
+        }
         
         updateRunningPath(coordinates)
     }, { deep: true })

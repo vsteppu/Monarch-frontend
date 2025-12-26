@@ -18,7 +18,7 @@
                     Distance
                 </div>
                 <div class=" text-3xl md:text-6xl w-full text-end">
-                    {{ distance }} km
+                    {{ distance / 100 }} km
                 </div>
             </div>
             <!-- <div class="text-sm text-black flex flex-col">
