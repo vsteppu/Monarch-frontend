@@ -21,7 +21,11 @@
                     {{ distance }} km
                 </div>
             </div>
-            <span class="text-sm text-black">here {{ sum }}</span>
+            <div class="text-sm text-black">
+                pointToPoint: {{ pointToPoint }}
+                traveledDistance {{ traveledDistance }}
+                convertToKM {{ convertToKM }}
+            </div>
             <div class="relative h-full">
                 <MapComponent class="h-full"/>
                 <div class="absolute bottom-15 right-0 flex w-full justify-center gap-9">
@@ -66,7 +70,11 @@ import MapComponent from '../components/map-component.vue'
 
 const exerciseStore = useExerciseStore();
 const mapTilerStore = useMapTilerStore();
-const { distance, routeCoords, sum } = storeToRefs(mapTilerStore)
+const { distance, routeCoords, sum,
+        pointToPoint,
+        traveledDistance,
+        convertToKM,
+ } = storeToRefs(mapTilerStore)
 const { showRunningModal } = storeToRefs(exerciseStore)
 const { seconds, minutes, hours, startTimer, stopTimer} = useTimer()
 

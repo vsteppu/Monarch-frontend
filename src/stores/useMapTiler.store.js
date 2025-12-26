@@ -14,6 +14,10 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
     const watchId = ref(null)
     const error = ref(null)
 
+    const pointToPoint = ref(null)
+    const traveledDistance =  ref(null)
+    const convertToKM = ref(null)
+
     const geojson = {
             'type': 'FeatureCollection',
             'features': [
@@ -173,10 +177,13 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
         const firstPoint = new mapTilerSDK.LngLat(firstLong, firstLat)
         const secondPoint = new mapTilerSDK.LngLat(secondLong, secondLat)
 
-        const pointToPoint = firstPoint.distanceTo(secondPoint)
-        const traveledDistance =  Math.round(pointToPoint) + previousDistance
-        const convertToKM = traveledDistance / 100
+        pointToPoint.value = firstPoint.distanceTo(secondPoint)
+        traveledDistance.value =  Math.round(pointToPoint) + previousDistance
+        convertToKM.value = traveledDistance / 100
         
+        console.log('traveledDistance: ', traveledDistance);
+        console.log('convertToKM: ', convertToKM);
+
         distance.value = convertToKM
         console.log('distance.value: ', distance.value);
     }
@@ -199,6 +206,10 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
         distance,
         mapContainer,
         sum,
+
+        pointToPoint,
+        traveledDistance,
+        convertToKM,
 
         getLocation,
         addMapHandler,
