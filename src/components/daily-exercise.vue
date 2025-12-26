@@ -67,7 +67,7 @@ const router = useRouter();
 const exerciseStore = useExerciseStore();
 const { showRunningModal } = storeToRefs(exerciseStore)
 
-const userStatus = ref(getUser()?.meta?.status);
+const userStatus = computed(() => { return getUser()?.meta?.status });
 
 //const DAILY_EXERCISE = [
 //    { name: 'push_ups', value: 0, display_name: 'Push ups', unit_type: 'reps' },
@@ -98,6 +98,8 @@ const decreeseCount = ( name ) => {
 };
 
 const defaultExerciseToDo = (type) => {
+    console.log('type: ', type);
+    console.log('userStatus.value: ', userStatus.value);
     const exercises = TRAINING_LEVELS.find(exercise => exercise.name == userStatus.value)
     console.log('exercises?.repetitions: ', exercises?.repetitions);
     return type == 'reps' ? exercises?.repetitions : exercises?.running_km
