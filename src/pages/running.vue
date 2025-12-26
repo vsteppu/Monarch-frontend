@@ -18,12 +18,12 @@
                     Distance
                 </div>
                 <div class=" text-3xl md:text-6xl w-full text-end">
-                    {{ convertDistance(distance) }}
+                    {{ distance }} km
                 </div>
             </div>
             <div class="relative h-full">
                 <MapComponent class="h-full"/>
-                <div class="absolute bottom-0 flex w-full justify-center gap-9">
+                <div class="absolute bottom-15 right-0 flex w-full justify-center gap-9">
                     <button
                         v-if="!startRun"
                         @click="startRunningHandler"
@@ -59,13 +59,13 @@ import { useTimer } from '@/composables/useTimer';
 
 import { PlayIcon, PauseIcon, StopIcon, } from "@heroicons/vue/24/outline";
 
-import { useOpenLayerMapStore } from '@/stores/useMap.store.js';
+import { useMapTilerStore } from '@/stores/useMapTiler.store.js';
 import Loading from '@/assets/icons/loading.vue'
 import MapComponent from '../components/map-component.vue'
 
 const exerciseStore = useExerciseStore();
-const openLayerMapStore = useOpenLayerMapStore();
-const { distance } = storeToRefs(openLayerMapStore)
+const mapTilerStore = useMapTilerStore();
+const { distance, routeCoords } = storeToRefs(mapTilerStore)
 const { showRunningModal } = storeToRefs(exerciseStore)
 const { seconds, minutes, hours, startTimer, stopTimer} = useTimer()
 
@@ -76,12 +76,17 @@ const pauseRun = ref(false)
 const element = document.createElement('div')
 
 const startRunningHandler = () => {
+    routeCoords.value == 0 
+        ? mapTilerStore.addRunningPath()
+        : mapTilerStore.resumeRunningPath()
+
     pauseRun.value = false
     startRun.value = true
     startTimer()
 }
 
 const pauseRunningHandler = () => {
+    mapTilerStore.pauseRunningPath()
     pauseRun.value = true
     startRun.value = false
     stopTimer()
@@ -90,9 +95,6 @@ const pauseRunningHandler = () => {
 const stopRunningHandler = () => {
     startRun.value = false
     pauseRun.value = false
-}
-
-const convertDistance = (num) => {
-    return Math.round(num * 100) / 100
+    mapTilerStore.completeRunningPath()
 }
 </script>

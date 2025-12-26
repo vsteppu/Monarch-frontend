@@ -11,14 +11,14 @@
 import { onMounted } from 'vue';
 import Notification from './components/notification.vue'
 import NavBar from './components/nav-bar.vue'
-import { useOpenLayerMapStore } from './stores/useMap.store';
+import { useMapTilerStore } from './stores/useMapTiler.store';
 import { storeToRefs } from 'pinia';
 
-const openLayerMapStore = useOpenLayerMapStore()
-const { geoLocation } = storeToRefs(openLayerMapStore)
+const mapTilerStore = useMapTilerStore()
+const { geoLocation } = storeToRefs(mapTilerStore)
 
 onMounted(async() => {
-    await openLayerMapStore.getLocation()
+    await mapTilerStore.getLocation()
 })
 </script>
 

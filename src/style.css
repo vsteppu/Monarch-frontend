@@ -9,6 +9,11 @@ body {
     font-family: 'Montserrat', 'sans-serif';
 }
 
+.mapboxgl-ctrl-geolocate {
+    display: none !important;
+}
+
+
 @layer utilities {
     .scrollbar-custom::-webkit-scrollbar {
         display: block;

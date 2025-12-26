@@ -9,10 +9,13 @@
             :to="{ name: 'home' }"
         >
             <span
-                class="font-extrabold text-2xl"
+                class="font-extrabold hidden md:block text-2xl"
             >
                 MONARCH
             </span>
+            <Logo 
+                class="size-8 md:hidden"
+            />
         </router-link>
         <SidebarMenu class="hidden md:block"/>
         <div class="md:hidden">
