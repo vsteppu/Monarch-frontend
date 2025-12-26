@@ -52,7 +52,7 @@
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useExerciseStore } from "@/stores/exercise.store.js";
-import { DAILY_EXERCISE, TRAINING_LEVELS } from "@/stores/store";
+import { TRAINING_LEVELS } from "@/stores/store";
 import { useAuthState } from "@/composables/auth";
 import { useRouter } from "vue-router";
 
@@ -65,6 +65,13 @@ const exerciseStore = useExerciseStore();
 const { showRunningModal } = storeToRefs(exerciseStore)
 
 const userStatus = ref(getUser()?.meta?.status);
+
+const DAILY_EXERCISE = [
+    { name: 'push_ups', value: 0, display_name: 'Push ups', unit_type: 'reps' },
+    { name: 'sit_ups', value: 0, display_name: 'Sit ups', unit_type: 'reps' },
+    { name: 'squats', value: 0, display_name: 'Squats', unit_type: 'reps' },
+    { name: 'running', value: 0, display_name: 'Running', unit_type: 'km' },
+]
 
 const increeseCount = ( name ) => {
     const exerciseIndex = DAILY_EXERCISE.findIndex(item => item.name === name)
