@@ -18,7 +18,7 @@
                     Distance
                 </div>
                 <div class=" text-3xl md:text-6xl w-full text-end">
-                    {{ distance }} km
+                    {{ distance }} km / C {{ routeCoords.length }}
                 </div>
             </div>
             <div class="relative h-full">
