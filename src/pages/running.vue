@@ -22,9 +22,8 @@
                 </div>
             </div>
             <div class="text-sm text-black flex flex-col">
-                pointToPoint: {{ pointToPoint }}
-                traveledDistance {{ traveledDistance }}
-                convertToKM {{ convertToKM }}
+                <span>PointToPoint: {{ pointToPoint }}</span>
+                <span>traveledDistance: {{ traveledDistance }}</span>
             </div>
             <div class="relative h-full">
                 <MapComponent class="h-full"/>

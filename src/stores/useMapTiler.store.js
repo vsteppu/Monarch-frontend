@@ -170,7 +170,7 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
         }
     }
 
-    const calculateDistance = (coordsArr, previousDistance) => {
+    const calculateDistance = (coordsArr) => {
         const [firstLong, firstLat] = coordsArr.at(-1)
         const [secondLong, secondLat] = coordsArr.at(-2)
 
@@ -178,14 +178,12 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
         const secondPoint = new mapTilerSDK.LngLat(secondLong, secondLat)
 
         pointToPoint.value = firstPoint.distanceTo(secondPoint)
-        traveledDistance.value =  pointToPoint.value + previousDistance
-        convertToKM.value = traveledDistance.value / 100
+        traveledDistance.value = pointToPoint.value + distance.value
 
         console.log('traveledDistance: ', traveledDistance);
         console.log('convertToKM: ', convertToKM);
 
-        distance.value = Math.round(convertToKM.value)
-        console.log('distance.value: ', distance.value);
+        distance.value = traveledDistance.value.toFixed(2)
     }
 
     watch(geoLocation, (newVal) => { 
