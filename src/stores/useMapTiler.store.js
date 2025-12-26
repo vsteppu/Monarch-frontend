@@ -136,11 +136,11 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
         });
 
         
-        setInterval(() => {
-            if (routeCoords.value.length >= 2) {
-                calculateDistance(routeCoords.value, distance.value)
-            }
-        }, 3000)
+//        setInterval(() => {
+//            if (routeCoords.value.length >= 2) {
+//                calculateDistance(routeCoords.value, distance.value)
+//            }
+//        }, 3000)
     }
 
     const updateRunningPath = (coordinates) => {
@@ -197,6 +197,10 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
     watch(routeCoords, (coordinates) => {
         if (routeCoords.value == []) return;
         if (!map.value) return;
+
+        if (routeCoords.value.length >= 2) {
+            calculateDistance(coordinates)
+        }
         
         updateRunningPath(coordinates)
     }, { deep: true })
