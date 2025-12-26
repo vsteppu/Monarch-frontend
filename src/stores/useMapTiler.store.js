@@ -128,7 +128,7 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
             if (routeCoords.value.length >= 2) {
                 calculateDistance(routeCoords.value, distance.value)
             }
-        }, 5000)
+        }, 3000)
     }
 
     const updateRunningPath = (coordinates) => {
@@ -173,9 +173,11 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
         const firstPoint = new mapTilerSDK.LngLat(firstLong, firstLat)
         const secondPoint = new mapTilerSDK.LngLat(secondLong, secondLat)
 
-        const sum = firstPoint.distanceTo(secondPoint)
-
-        distance.value = (Math.round(sum) + previousDistance) / 100
+        const pointToPoint = firstPoint.distanceTo(secondPoint)
+        const traveledDistance =  Math.round(pointToPoint) + previousDistance
+        const convertToKM = traveledDistance / 100
+        
+        distance.value = convertToKM
         console.log('distance.value: ', distance.value);
     }
 
