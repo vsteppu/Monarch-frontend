@@ -175,7 +175,7 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
 
         const sum = firstPoint.distanceTo(secondPoint)
 
-        distance.value = Math.round(sum) + previousDistance
+        distance.value = (Math.round(sum) + previousDistance) / 100
         console.log('distance.value: ', distance.value);
     }
 
