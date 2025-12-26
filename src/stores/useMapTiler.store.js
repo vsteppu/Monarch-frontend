@@ -121,6 +121,14 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
                 'line-width': 4
             }
         });
+
+        
+        setInterval(() => {
+            console.log('#1');
+            if (routeCoords.value.length >= 2) {
+                calculateDistance(routeCoords.value, distance.value)
+            }
+        }, 1000)
     }
 
     const updateRunningPath = (coordinates) => {
@@ -137,13 +145,6 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
                 }
                 }]
             })
-        }
-
-        if (coordinates.length >= 2) {
-            setInterval(() => {
-                console.log('#1');
-                calculateDistance(coordinates)
-            }, 1000)
         }
     }
 
@@ -165,7 +166,7 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
         }
     }
 
-    const calculateDistance = (coordsArr) => {
+    const calculateDistance = (coordsArr, previousDistance) => {
         const [firstLong, firstLat] = coordsArr.at(-1)
         const [secondLong, secondLat] = coordsArr.at(-2)
 
@@ -174,7 +175,7 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
 
         const sum = firstPoint.distanceTo(secondPoint)
 
-        distance.value = Math.round(distance.value + sum) / 100
+        distance.value = Math.round(previousDistance + sum) / 100
         console.log('distance.value: ', distance.value);
     }
 
