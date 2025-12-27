@@ -72,10 +72,13 @@ const userStatus = computed(() => {return getUser()?.dataValues?.status});
 const dailyExercises = computed(() => { return DAILY_EXERCISE})
 
 const defaultExerciseToDo = (type) => {
+    console.log('TRAINING_LEVELS: ', TRAINING_LEVELS);
+    console.log('userStatus.value: ', userStatus.value);
     const exercises = TRAINING_LEVELS.find(exercise => {
         return exercise.name === userStatus.value
     })
-
+    console.log('exercises: ', exercises);
+    
     return type == 'reps' ? exercises?.repetitions : exercises?.running_km
 };
 
