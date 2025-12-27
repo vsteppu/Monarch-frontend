@@ -96,6 +96,7 @@ const defaultExerciseToDo = (type) => {
     console.log('type: ', type);
     console.log('userStatus.value: ', userStatus.value);
     const exercises = TRAINING_LEVELS.find(exercise => exercise.name == userStatus.value)
+    console.log('TRAINING_LEVELS: ', TRAINING_LEVELS);
     console.log('exercises: ', exercises);
     console.log('exercises?.repetitions: ', exercises?.repetitions);
     return type == 'reps' ? exercises?.repetitions : exercises?.running_km
