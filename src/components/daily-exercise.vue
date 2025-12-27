@@ -67,14 +67,9 @@ const router = useRouter();
 const exerciseStore = useExerciseStore();
 const { showRunningModal } = storeToRefs(exerciseStore)
 
-const userStatus = computed(() => { return getUser()?.meta?.status });
-
-//const DAILY_EXERCISE = [
-//    { name: 'push_ups', value: 0, display_name: 'Push ups', unit_type: 'reps' },
-//    { name: 'sit_ups', value: 0, display_name: 'Sit ups', unit_type: 'reps' },
-//    { name: 'squats', value: 0, display_name: 'Squats', unit_type: 'reps' },
-//    { name: 'running', value: 0, display_name: 'Running', unit_type: 'km' },
-//]
+const userStatus = ref(getUser()?.meta?.status);
+console.log('getUser(): ', getUser()?.meta);
+console.log('userStatus: ', userStatus.value);
 
 const dailyExercises = computed(() => { return DAILY_EXERCISE})
 
