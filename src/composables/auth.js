@@ -9,9 +9,7 @@ export const useAuthState = () => {
     }
 
     const getUser = () => {
-        console.log('#1');
         const response = JSON.parse(localStorage.getItem('user'))
-        console.log('response?.user: ', response?.user);
         return response?.user || {}
     }
 

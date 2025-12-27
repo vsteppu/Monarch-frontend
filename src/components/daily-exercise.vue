@@ -67,11 +67,17 @@ const router = useRouter();
 const exerciseStore = useExerciseStore();
 const { showRunningModal } = storeToRefs(exerciseStore)
 
-const userStatus = computed(() => {return getUser()?.meta?.status});
-console.log('getUser(): ', getUser());
-console.log('userStatus: ', userStatus.value);
+const userStatus = computed(() => {return getUser()?.dataValues?.status});
 
 const dailyExercises = computed(() => { return DAILY_EXERCISE})
+
+const defaultExerciseToDo = (type) => {
+    const exercises = TRAINING_LEVELS.find(exercise => {
+        return exercise.name === userStatus.value
+    })
+
+    return type == 'reps' ? exercises?.repetitions : exercises?.running_km
+};
 
 const increeseCount = ( name ) => {
     const exerciseIndex = DAILY_EXERCISE.findIndex(item => item.name === name)
@@ -90,20 +96,6 @@ const decreeseCount = ( name ) => {
         ? updateValue.value - 5
         : updateValue.value -1
     DAILY_EXERCISE[exerciseIndex] = updateValue
-};
-
-const defaultExerciseToDo = (type) => {
-    console.log('type: ', type);
-    console.log('userStatus.value: ', userStatus.value);
-    const exercises = TRAINING_LEVELS.find(exercise => {
-        console.log('exercise.name: ', exercise.name);
-        console.log('userStatus.value: ', userStatus.value);
-        exercise.name === 'beginner'}
-    )
-    console.log('TRAINING_LEVELS: ', TRAINING_LEVELS);
-    console.log('exercises: ', exercises);
-    console.log('exercises?.repetitions: ', exercises?.repetitions);
-    return type == 'reps' ? exercises?.repetitions : exercises?.running_km
 };
 
 const submitExercises = async() => {
