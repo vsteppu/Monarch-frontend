@@ -95,7 +95,11 @@ const decreeseCount = ( name ) => {
 const defaultExerciseToDo = (type) => {
     console.log('type: ', type);
     console.log('userStatus.value: ', userStatus.value);
-    const exercises = TRAINING_LEVELS.find(exercise => exercise.name == userStatus.value)
+    const exercises = TRAINING_LEVELS.find(exercise => {
+        console.log('exercise.name: ', exercise.name);
+        console.log('userStatus.value: ', userStatus.value);
+        exercise.name === userStatus.value}
+    )
     console.log('TRAINING_LEVELS: ', TRAINING_LEVELS);
     console.log('exercises: ', exercises);
     console.log('exercises?.repetitions: ', exercises?.repetitions);
