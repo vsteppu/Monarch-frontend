@@ -8,7 +8,7 @@ export const DAILY_EXERCISE = [
 export const TRAINING_LEVELS = [
     {
         id: 1,
-        name: "beginner",
+        name: "beginner" ,
         rank: "e",
         displayName: "Beginner",
         repetitions: 20,
