@@ -67,8 +67,8 @@ const router = useRouter();
 const exerciseStore = useExerciseStore();
 const { showRunningModal } = storeToRefs(exerciseStore)
 
-const userStatus = ref(getUser()?.meta?.status);
-console.log('getUser(): ', getUser()?.meta);
+const userStatus = computed(() => {return getUser()?.meta?.status});
+console.log('getUser(): ', getUser());
 console.log('userStatus: ', userStatus.value);
 
 const dailyExercises = computed(() => { return DAILY_EXERCISE})
