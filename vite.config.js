@@ -26,5 +26,8 @@ server:{
                 rewrite: path => path.replace(/^\/api/, '')
             }
         }
-    }
+    },
+build: {
+    sourcemap: true
+}
 })
