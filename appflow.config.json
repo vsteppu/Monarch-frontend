@@ -2,7 +2,7 @@
     "apps": [
         {
             "appId": "7f667649", 
-            "root": "",
+            "root": ".",
             "dependencyInstallCommand": "npm install --include=dev",
             "webBuildCommand": "npm run build",
             "androidPath": "android",
