@@ -4,7 +4,7 @@
             <h1 class="text-2xl font-extralight">
                 Login
             </h1>
-            <logo class="size-6" />
+            <logo class="size-8"/>
         </div>
         <div>
             <h2 class="text-xl font-thin mb-1">

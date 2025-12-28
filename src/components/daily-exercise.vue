@@ -1,6 +1,6 @@
 <template>
     <div
-        class=" text-base md:text-2xl w-full md:w-2/5 font-thin flex flex-col justify-center"
+        class=" text-base md:text-2xl w-full md:w-2/5 md:font-thin font-light flex flex-col justify-center"
     >
         <h1>Daily exercise</h1>
         <div
@@ -45,6 +45,7 @@
                 Submit
             </button>
         </div>
+        
     </div>
 </template>
 
@@ -72,12 +73,9 @@ const userStatus = computed(() => {return getUser()?.dataValues?.status});
 const dailyExercises = computed(() => { return DAILY_EXERCISE})
 
 const defaultExerciseToDo = (type) => {
-    console.log('TRAINING_LEVELS: ', TRAINING_LEVELS);
-    console.log('userStatus.value: ', userStatus.value);
     const exercises = TRAINING_LEVELS.find(exercise => {
         return exercise.name === userStatus.value
     })
-    console.log('exercises: ', exercises);
     
     return type == 'reps' ? exercises?.repetitions : exercises?.running_km
 };

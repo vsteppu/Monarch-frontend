@@ -4,7 +4,8 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                'montserrat': ['Montserrat', 'sans-serif']
+                'montserrat': ['Montserrat', 'sans-serif'],
+                'bbh': ['BBH Hegarty', 'sans-serif']
             },
             colors: {
                 'blue-extra-dark':'#11151d',

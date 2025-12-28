@@ -1,33 +1,30 @@
 
 <template>
-    <div class="h-screen w-full flex pt-[52px] items-center justify-center">
+    <div class="h-screen w-full flex md:items-center justify-center">
         <div v-if="loading" class="h-screen w-full">
             <Loading class="size-8"/>
         </div>
-        <div v-else class="w-full md:w-2/3 h-full md:h-2/3 flex flex-col bg-amber-400">
-            <div class="flex justify-between w-full text-black p-2">
-                <div class="text-3xl md:text-5xl">
+        <div v-else class="w-full grow md:w-2/3 md:h-2/3 flex flex-col bg-amber-400 mt-14">
+            <div class="flex text-3xl justify-between w-full text-black p-2">
+                <div>
                     Timer
                 </div>
-                <div class=" text-3xl md:text-6xl w-full text-end">
+                <div class="w-full text-end">
                     {{ hours + ' / ' + minutes + ' / ' + seconds }}
                 </div>
             </div>
-            <div class="flex justify-between w-full text-black p-2">
-                <div class="text-3xl md:text-5xl">
+            <div class="flex justify-between text-3xl w-full text-black p-2">
+                <div>
                     Distance
                 </div>
-                <div class=" text-3xl md:text-6xl w-full text-end">
+                <div class="w-full text-end">
                     {{ distance / 100 }} km
                 </div>
             </div>
-            <!-- <div class="text-sm text-black flex flex-col">
-                <span>PointToPoint: {{ pointToPoint }}</span>
-                <span>traveledDistance: {{ traveledDistance }}</span>
-            </div> -->
+            <!-- <Running /> -->
             <div class="relative h-full">
                 <MapComponent class="h-full"/>
-                <div class="absolute bottom-15 right-0 flex w-full justify-center gap-9">
+                <div class="absolute bottom-15 flex justify-center w-full gap-9">
                     <button
                         v-if="!startRun"
                         @click="startRunningHandler"
@@ -66,6 +63,7 @@ import { PlayIcon, PauseIcon, StopIcon, } from "@heroicons/vue/24/outline";
 import { useMapTilerStore } from '@/stores/useMapTiler.store.js';
 import Loading from '@/assets/icons/loading.vue'
 import MapComponent from '../components/map-component.vue'
+import Running from '../effects/running.vue'
 
 const exerciseStore = useExerciseStore();
 const mapTilerStore = useMapTilerStore();

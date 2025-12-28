@@ -4,7 +4,7 @@
         >
             <div
                 @click="closeSidebar"
-                class="flex flex-col md:flex-row md:items-center justify-end space-y-5 md:space-x-5"
+                class="flex flex-col md:flex-row md:items-center justify-end space-y-5 md:space-y-0 md:space-x-5"
             >
                 <router-link 
                     :to="{ name: 'home' }"

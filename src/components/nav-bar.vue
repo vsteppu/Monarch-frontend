@@ -1,8 +1,8 @@
 <template>
     <div 
-        v-if="authenticated"
+        v-if="authenticated && !showSidebar"
         :class="[
-            'w-full fixed py-3 flex justify-between px-4 md:px-20'
+            'w-full h-14 fixed py-3 flex justify-between items-center px-4 md:px-20 z-100'
         ]"
     >
         <router-link 
@@ -14,7 +14,7 @@
                 MONARCH
             </span>
             <Logo 
-                class="size-8 md:hidden"
+                class="size-10 md:hidden"
             />
         </router-link>
         <SidebarMenu class="hidden md:block"/>

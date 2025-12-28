@@ -1,9 +1,7 @@
 <template>
-    <NavBar/>
     <notification />
-    <div>
-        <router-view />
-    </div>
+    <NavBar/>
+    <router-view />
     <div id="reCaptchaContainer"></div>
 </template>
 
