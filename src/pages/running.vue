@@ -1,10 +1,7 @@
 
 <template>
     <div class="h-screen w-full flex md:items-center justify-center">
-        <div v-if="loading" class="h-screen w-full">
-            <Loading class="size-8"/>
-        </div>
-        <div v-else class="w-full grow md:w-2/3 md:h-2/3 flex flex-col bg-amber-400 mt-14">
+        <div class="w-full grow md:w-2/3 md:h-2/3 flex flex-col bg-amber-400 mt-14">
             <div class="flex text-3xl justify-between w-full text-black p-2">
                 <div>
                     Timer
@@ -21,7 +18,9 @@
                     {{ distance / 100 }} km
                 </div>
             </div>
-            <!-- <Running /> -->
+            <div v-if="loadingMap" class="w-full h-full flex items-center justify-center">
+                <Running class="size-20"/>
+            </div>
             <div class="relative h-full">
                 <MapComponent class="h-full"/>
                 <div class="absolute bottom-15 flex justify-center w-full gap-9">
@@ -67,15 +66,12 @@ import Running from '../effects/running.vue'
 
 const exerciseStore = useExerciseStore();
 const mapTilerStore = useMapTilerStore();
-const { distance, routeCoords } = storeToRefs(mapTilerStore)
+const { distance, routeCoords, loadingMap, map } = storeToRefs(mapTilerStore)
 const { showRunningModal } = storeToRefs(exerciseStore)
 const { seconds, minutes, hours, startTimer, stopTimer} = useTimer()
 
-const loading = ref(false)
 const startRun = ref(false)
 const pauseRun = ref(false)
-
-const element = document.createElement('div')
 
 const startRunningHandler = () => {
     routeCoords.value == 0 

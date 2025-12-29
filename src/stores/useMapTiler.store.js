@@ -14,12 +14,10 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
     const sum = ref([])
     const watchId = ref(null)
     const error = ref(null)
-
+    const loadingMap = ref(false)
     const pointToPoint = ref(null)
     const traveledDistance =  ref(null)
     const convertToKM = ref(null)
-    
-    const loadingMap = ref(false)
 
     const geojson = {
             'type': 'FeatureCollection',
@@ -83,7 +81,6 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
     }
 
     const addMapHandler = (coordinates) => {
-        loadingMap.value = true
         const {latitude, longitude} = coordinates
 
         map.value = new mapTilerSDK.Map({
@@ -111,7 +108,7 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
             setTimeout(() => {
                 geolocate.trigger()
             }, 300)
-            //loadingMap.value = false
+            loadingMap.value = false
         })
     }
 
@@ -186,7 +183,8 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
         distance.value = Math.round(distance.value + pointToPoint.value)
     }
 
-    watch(geoLocation, (newVal) => { 
+    watch(geoLocation, (newVal) => {
+        loadingMap.value = true
         addMapHandler(newVal)
     }, {once:true})
 
