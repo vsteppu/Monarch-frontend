@@ -25,9 +25,14 @@ const getUserAPI = async (id) => {
     return response?.data
 }
 
+const getParametersAPI = async (id) => {
+    const response = await axios.get(`${api}/user?id=${id}`)
+    return response?.data
+}
 
 export {
     registerAPI,
     loginAPI,
     getUserAPI,
+    getParametersAPI,
 }

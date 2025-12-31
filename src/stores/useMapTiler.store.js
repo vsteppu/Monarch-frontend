@@ -34,26 +34,30 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
         };
 
     const getLocation = () => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    geoLocation.value = {
-                        longitude: position.coords.longitude,
-                        latitude: position.coords.latitude,
+        return new Promise ((resolve, reject) => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        geoLocation.value = {
+                            longitude: position.coords.longitude,
+                            latitude: position.coords.latitude,
+                        }
+                        resolve(geoLocation.value)
+                    },
+                    (err) => {
+                        error.value = err.message
+                        reject(error.value)
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 600000
                     }
-                },
-                (err) => {
-                    error.value = err.message
-                },
-                {
-                    enableHighAccuracy: true,
-                    timeout: 10000,
-                    maximumAge: 600000
-                }
-            )
-        } else {
-            console.error("Something's wrong");
-        }
+                )
+            } else {
+                console.error("Something's wrong");
+            }
+        })
     }
 
     const watchLocationHandler = () => {
@@ -80,7 +84,10 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
         )
     }
 
-    const addMapHandler = (coordinates) => {
+    const addMapHandler = async() => {
+        console.log('#123');
+        const coordinates = await getLocation()
+        console.log('coordinates: ', coordinates);
         const {latitude, longitude} = coordinates
 
         map.value = new mapTilerSDK.Map({
@@ -90,6 +97,8 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
             zoom: 17,
             geolocateControl: false,
         });
+        
+        console.log('map.value: ', map.value);
         
         map.value.on('load', () => {
             const geolocate = new mapTilerSDK.GeolocateControl({
@@ -183,10 +192,10 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
         distance.value = Math.round(distance.value + pointToPoint.value)
     }
 
-    watch(geoLocation, (newVal) => {
-        loadingMap.value = true
-        addMapHandler(newVal)
-    }, {once:true})
+    //watch(geoLocation, (newVal) => {
+    //    loadingMap.value = true
+    //    addMapHandler(newVal)
+    //}, {once:true})
 
     watch(routeCoords, (coordinates) => {
         if (routeCoords.value == []) return;

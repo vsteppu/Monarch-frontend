@@ -1,7 +1,7 @@
 <template>
     <div class="w-full flex">
-        <div class="mx-auto bg-stone-900 rounded-2xl h-full mt-28">
-            <div class=" flex items-center text-center px-3 h-full">
+        <div class="mx-auto w-full md:w-2/3 bg-stone-900 h-full mt-28">
+            <div class="flex items-center text-center px-3 h-full w-full">
                 <span
                     @click="moveBackwardHandler"
                     class="cursor-pointer"

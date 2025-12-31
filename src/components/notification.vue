@@ -2,7 +2,7 @@
     <TopDropEffect>
         <div
             v-if="showNotification"
-            class="absolute top-0 font-extralight text-center w-full h-20 pointer-events-none"
+            class="absolute top-0 z-999 font-extralight text-center w-full pointer-events-none"
         >
             <div 
                 v-for="notification in notifications"
@@ -11,6 +11,7 @@
                     ? 'bg-red-600' 
                     : 'bg-green-600'
                 "
+                class="py-2"
             >
                 {{ notification.message }}
             </div>

@@ -1,3 +1,7 @@
+export const apiPrefix = import.meta.env.NODE_ENV !== 'production' 
+    ? '/api'
+    : ''
+
 export const isGoogleRecaptchaEnabled = () => {
     return import.meta.env.VITE_GOOGLE_RECAPTCHA_ENABLED === 'true'
 }

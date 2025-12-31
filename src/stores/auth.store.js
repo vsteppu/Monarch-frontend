@@ -45,10 +45,14 @@ export const useAuthStore = defineStore('authStore',()=>{
         }
     }
 
+    const userParameters = async() => {
+        const response = await getParametersAPI({ email, password, token });
+        console.log('response: ', response);
+    }
+
     const logoutUser = () => {
         localStorage.removeItem('user')
         router.push({name: 'auth-page'})
-
     }
 
     return {
@@ -56,6 +60,7 @@ export const useAuthStore = defineStore('authStore',()=>{
         authenticated,
         loginUser,
         registerUser,
+        userParameters,
         logoutUser,
     };
 })

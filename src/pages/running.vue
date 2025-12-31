@@ -1,7 +1,7 @@
 
 <template>
     <div class="h-screen w-full flex md:items-center justify-center">
-        <div class="w-full grow md:w-2/3 md:h-2/3 flex flex-col bg-amber-400 mt-14">
+        <div class="w-full grow md:w-2/3 flex flex-col bg-amber-400 mt-14">
             <div class="flex text-3xl justify-between w-full text-black p-2">
                 <div>
                     Timer
@@ -97,6 +97,6 @@ const stopRunningHandler = () => {
 }
 
 onMounted(() => {
-    mapTilerStore.getLocation()
+    mapTilerStore.addMapHandler()
 })
 </script>

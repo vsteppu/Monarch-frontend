@@ -17,7 +17,9 @@
                 class="size-10 md:hidden"
             />
         </router-link>
+
         <SidebarMenu class="hidden md:block"/>
+        
         <div class="md:hidden">
             <FadeEffect>
                 <Bars2Icon

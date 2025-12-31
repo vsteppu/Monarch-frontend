@@ -13,7 +13,7 @@
                     Home
                 </router-link>
                 <router-link 
-                    :to="{ name: 'progress' }"
+                    :to="{ name: 'workout-progress' }"
                     class="hover:text-violet-300"
                 >
                     Progress
@@ -30,6 +30,12 @@
                     class="hover:text-violet-300"
                 >
                     Running
+                </router-link>
+                <router-link 
+                    :to="{ name: 'profile' }"
+                    class="hover:text-violet-300"
+                >
+                    Profile
                 </router-link>
                 <div
                     @click="logout"

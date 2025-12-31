@@ -8,7 +8,6 @@ const getExercisesAPI = async (id) => {
 }
 
 const postExercisesAPI = async (data) => {
-    console.log('data: ', data);
     const response = await axios.post(`${api}/add-exercises`, data)
     return response?.data
 }

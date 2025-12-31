@@ -12,13 +12,19 @@
                 <div class="flex items-center justify-center">
                     {{ exercise?.value }} / {{ defaultExerciseToDo(exercise?.unit_type)}}
                     {{ exercise?.unit_type }}
-                    <button
+                    
+                    <router-link 
+                        :to="{name: 'running'}" 
                         v-if="exercise?.unit_type == 'km'"
-                        @click="showRunningModalHandler"
-                        class="p-3 my-3 bg-stone-800 ml-5 cursor-pointer"
+
                     >
-                        RUN
-                    </button>
+                        <div
+                            @click="showRunningModalHandler"
+                            class="p-3 my-3 bg-stone-800 ml-5 cursor-pointer"
+                        >
+                            RUN
+                        </div>
+                    </router-link>
                     <div v-else class=" flex flex-col text-center px-3 ml-3 cursor-pointer">
                         <span
                             @click="() => increeseCount(exercise?.name)"

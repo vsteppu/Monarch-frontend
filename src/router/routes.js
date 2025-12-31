@@ -4,6 +4,7 @@ import WorkoutProgress from '@/pages/workout-progress.vue'
 import Workouts from '@/pages/workouts.vue'
 import Running from '@/pages/running.vue'
 import DailyExercises from '@/pages/daily-exercises.vue'
+import Profile from '@/pages/profile.vue'
 
 const routes = [
     { 
@@ -19,9 +20,9 @@ const routes = [
         meta: { requiresAuth: true }
     },
     {
-        path: '/progress', 
+        path: '/workout-progress', 
         component: WorkoutProgress,
-        name: 'progress',
+        name: 'workout-progress',
         meta: { requiresAuth: true }
     },
     { 
@@ -40,6 +41,12 @@ const routes = [
         path: '/daily-exercises', 
         component: DailyExercises,
         name: 'daily-exercises',
+        meta: { requiresAuth: true }
+    },
+    { 
+        path: '/profile', 
+        component: Profile,
+        name: 'profile',
         meta: { requiresAuth: true }
     },
 ]

@@ -1,8 +1,8 @@
 <template>
-    <div class="flex items-center h-full">
+    <div class="flex items-center h-full w-full">
             <div
                 v-if="workoutDetails"
-                class="w-80 rounded p-6 flex flex-col font-extralight"
+                class="w-full rounded p-6 flex flex-col font-extralight"
             >
                 <div>
                     <div class="text-start text-2xl font-bold justify-between flex my-2">
