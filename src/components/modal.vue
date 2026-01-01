@@ -18,7 +18,10 @@
                         <XMarkIcon class="size-8"/>
                     </div>
                 </div>
-                <div class="w-full flex grow text-xl text-stone-300 font-thin">
+                <div :class="[
+
+                    'w-full flex grow text-xl text-stone-300 font-thin'
+                ]">
                     <slot name="content"/>
                 </div>
                 <div class="w-full text-xl text-stone-300 font-thin">
@@ -46,6 +49,10 @@ const props = defineProps({
     containerColor: {
         type: String,
         default: 'bg-black'
+    },
+    contentTextColor: {
+        type: String,
+        default: 'text-stone-300'
     },
 })
 

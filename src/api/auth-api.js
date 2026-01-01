@@ -26,8 +26,8 @@ const getUserAPI = async (id) => {
 }
 
 const getParametersAPI = async (id) => {
-    const response = await axios.get(`${api}/user?id=${id}`)
-    return response?.data
+    const response = await axios.get(`${api}/parameters?id=${id}`)
+    return response?.data?.meta
 }
 
 export {

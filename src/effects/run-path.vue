@@ -23,7 +23,6 @@ const props = defineProps({
 })
 
 const step = ref(0)
-console.log('step: ', props.color);
 
 const runninig = setInterval(() => {
     if (step.value === 6) {
@@ -31,6 +30,5 @@ const runninig = setInterval(() => {
         return;
     }
     step.value++
-    console.log('step.value: ', step.value);
 }, 500);
 </script>

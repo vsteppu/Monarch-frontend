@@ -2,6 +2,7 @@
     <notification />
     <NavBar/>
     <router-view />
+    <Feedback v-if="showFeedback"/>
     <div id="reCaptchaContainer"></div>
 </template>
 
@@ -11,6 +12,7 @@ import Notification from './components/notification.vue'
 import NavBar from './components/nav-bar.vue'
 import { useMapTilerStore } from './stores/useMapTiler.store';
 import { storeToRefs } from 'pinia';
+import Feedback from './components/feedback.vue'
 
 const mapTilerStore = useMapTilerStore()
 const { geoLocation } = storeToRefs(mapTilerStore)
