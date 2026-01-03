@@ -79,7 +79,6 @@ const selectDayHandler = (day) => {
         year: year.value,
     }
     selectedDay.value = day
-    console.log(data);
 }
 
 onMounted(async() => {
