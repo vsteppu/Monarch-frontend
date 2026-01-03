@@ -3,6 +3,7 @@ import { MONTHS } from "@/stores/store";
 
 export const useCreateCalendar = () => {
     const date = new Date()
+    const currentDay = ref(date.getDate())
     const selectedDay = ref(date.getDate())
     const month = ref(date.getMonth())
     const year = ref(date.getFullYear())
@@ -74,6 +75,7 @@ export const useCreateCalendar = () => {
         firstDayOfCurentMonth,
         lastDayOfCurrentMonth,
         calendar,
+        currentDay,
         selectedDay,
 
         createCalendar,

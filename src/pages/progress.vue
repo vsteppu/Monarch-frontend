@@ -22,7 +22,11 @@
                         @click="selectDayHandler(day)"
                         :class="[
                             'flex justify-center items-center p-2 w-full outline-2 outline-black',
-                            selectedDay === day ? 'bg-red-700' : 'bg-stone-600'
+                            currentDay === day 
+                                ? 'bg-red-700' 
+                                : selectedDay === day 
+                                    ? 'bg-green-700'
+                                    : 'bg-stone-600',
                         ]"
                     >
                         {{ setCalendar(day) }}
@@ -51,7 +55,7 @@ import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/vue/24/outline";
 import FadeEffect from '@/effects/fade-effect.vue'
 
 const exerciseStore = useExerciseStore();
-const { calendar, monthToString, year, selectedDay, setCalendar, previousMonthHandler, nextMonthHandler } = useCreateCalendar();
+const { calendar, monthToString, month, year, currentDay, selectedDay, setCalendar, previousMonthHandler, nextMonthHandler } = useCreateCalendar();
 
 const currentWorkout = ref(null);
 const workouts = ref([]);
@@ -64,7 +68,18 @@ const handleFetchExercises = async () => {
 }
 
 const selectDayHandler = (day) => {
-    console.log(day);
+    if (day <= 0) {
+        previousMonthHandler()
+    } else if (day > 31) {
+        nextMonthHandler()
+    }
+    const data = {
+        day,
+        month: month.value,
+        year: year.value,
+    }
+    selectedDay.value = day
+    console.log(data);
 }
 
 onMounted(async() => {
