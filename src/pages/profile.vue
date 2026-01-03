@@ -6,7 +6,7 @@
             <h1 class="text-2xl mb-2">Profile</h1>
             <div class="flex justify-between">
                 <span>Player</span>
-                <span>{{ user.name }}</span>
+                <span>{{ user?.name }}</span>
             </div>
             <Divider />
             <div class="flex justify-between">
@@ -36,22 +36,25 @@
     </div>
 </template>
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useAuthStore } from '@/stores/auth.store';
 import { useAuthState } from '@/composables/auth';
 import Divider from '@/components/divider.vue'
 import Loading from '@/assets/icons/loading.vue'
+import { storeToRefs } from 'pinia';
 
 const authStore = useAuthStore()
-const { getUser } = useAuthState()
+const { getUserId } = useAuthState()
 
-const user = getUser()
 const loading = ref(false)
+const user = ref(null)
 const parameters = ref(null)
 
 onMounted(async() => {
     loading.value = true
-    parameters.value = await authStore.userParameters(user.id)
+    const id = getUserId()
+    user.value = await authStore.getUser(id)
+    parameters.value = await authStore.userParameters(id)
     if(parameters.value) loading.value = false
 })
 </script>

@@ -13,17 +13,17 @@
                     Home
                 </router-link>
                 <router-link 
-                    :to="{ name: 'workout-progress' }"
+                    :to="{ name: 'progress' }"
                     class="hover:text-violet-300"
                 >
                     Progress
                 </router-link>
 
                 <router-link 
-                    :to="{ name: 'workouts' }"
+                    :to="{ name: 'daily-exercises' }"
                     class="hover:text-violet-300"
                 >
-                    Workouts
+                    Daily Exercises
                 </router-link>
                 <router-link 
                     :to="{ name: 'running' }"

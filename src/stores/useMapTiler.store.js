@@ -85,9 +85,7 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
     }
 
     const addMapHandler = async() => {
-        console.log('#123');
         const coordinates = await getLocation()
-        console.log('coordinates: ', coordinates);
         const {latitude, longitude} = coordinates
 
         map.value = new mapTilerSDK.Map({
@@ -97,8 +95,6 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
             zoom: 17,
             geolocateControl: false,
         });
-        
-        console.log('map.value: ', map.value);
         
         map.value.on('load', () => {
             const geolocate = new mapTilerSDK.GeolocateControl({
@@ -188,7 +184,6 @@ export const useMapTilerStore = defineStore('mapTilerStore', () => {
         const secondPoint = new mapTilerSDK.LngLat(secondLong, secondLat)
 
         pointToPoint.value = firstPoint.distanceTo(secondPoint)
-        console.log('pointToPoint.value: ', pointToPoint.value);
         distance.value = Math.round(distance.value + pointToPoint.value)
     }
 

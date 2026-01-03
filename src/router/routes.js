@@ -1,6 +1,6 @@
 import Home from '@/pages/home.vue'
 import AuthPage from '@/pages/auth/auth-page.vue'
-import WorkoutProgress from '@/pages/workout-progress.vue'
+import Progress from '@/pages/progress.vue'
 import Workouts from '@/pages/workouts.vue'
 import Running from '@/pages/running.vue'
 import DailyExercises from '@/pages/daily-exercises.vue'
@@ -20,9 +20,9 @@ const routes = [
         meta: { requiresAuth: true }
     },
     {
-        path: '/workout-progress', 
-        component: WorkoutProgress,
-        name: 'workout-progress',
+        path: '/progress', 
+        component: Progress,
+        name: 'progress',
         meta: { requiresAuth: true }
     },
     { 

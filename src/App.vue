@@ -13,8 +13,12 @@ import NavBar from './components/nav-bar.vue'
 import { useMapTilerStore } from './stores/useMapTiler.store';
 import { storeToRefs } from 'pinia';
 import Feedback from './components/feedback.vue'
+import { useAuthStore } from './stores/auth.store';
+import { useAuthState } from './composables/auth';
 
+const authStore = useAuthStore()
 const mapTilerStore = useMapTilerStore()
+const { getUserId } = useAuthState()
 const { geoLocation } = storeToRefs(mapTilerStore)
 </script>
 

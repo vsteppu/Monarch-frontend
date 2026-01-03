@@ -33,7 +33,6 @@ import { useAuthState } from '@/composables/auth';
 const { getUser } = useAuthState()
 
 const user = getUser()
-console.log('user: ', user);
 
 const feedback = ref('')
 
@@ -46,7 +45,6 @@ const sendFeedbackHandler = async() => {
             body: JSON.stringify({text: feedback.value})
         }
     )
-    console.log('response: ', response);
     return response
 }
 </script>

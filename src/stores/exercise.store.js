@@ -6,8 +6,8 @@ import { useNotificationStore } from "./notification.store";
 
 export const useExerciseStore = defineStore( "exercise-store", () => {
     const notificationStore = useNotificationStore()
-    const { getUser } = useAuthState()
-    const user = getUser()
+    const { getUserId } = useAuthState()
+    const userId = ref(getUserId())
 
     const workoutHistory = ref(null)
     const userName = ref(null)
@@ -15,9 +15,8 @@ export const useExerciseStore = defineStore( "exercise-store", () => {
 
     const fetchDailyExercises = async() => {
         try{
-            const response = await getExercisesAPI(user.id)
+            const response = await getExercisesAPI(userId.value)
             workoutHistory.value = response?.exercises
-            console.log('workoutHistory.value: ', workoutHistory.value);
             return workoutHistory.value
         } catch (err) {
             console.error(err)
@@ -27,7 +26,7 @@ export const useExerciseStore = defineStore( "exercise-store", () => {
 
     const addDailyExercises = async(exercises) => {
         try{
-            const data = { user_id: user.id, exercises }
+            const data = { user_id: userId.value, exercises }
             const response = await postExercisesAPI(data)
             if (response.success){
                 notificationStore.notify("Exercise was added", "success")

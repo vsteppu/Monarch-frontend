@@ -139,3 +139,17 @@ export const testCoords = [
   [28.779618, 47.037812]
 ]
 
+export const MONTHS = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+]

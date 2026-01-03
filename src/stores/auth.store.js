@@ -1,6 +1,6 @@
 import { ref, watch } from "vue";
 import { defineStore } from "pinia";
-import { loginAPI, registerAPI, getParametersAPI } from "@/api/auth-api";
+import { loginAPI, registerAPI, getUserAPI, getUserParametersAPI } from "@/api/auth-api";
 import { useAuthState } from "@/composables/auth";
 import { useGoogleToken } from "@/stores/recaptcha.js";
 import { useRouter } from "vue-router";
@@ -10,9 +10,9 @@ export const useAuthStore = defineStore('authStore',()=>{
     const notificationStore = useNotificationStore()
     const googleToken = useGoogleToken()
     const router = useRouter()
-    const { getUser, isAuthenticated } = useAuthState()
+    const { isAuthenticated } = useAuthState()
 
-    const user = ref(getUser() || null)
+    const user = ref(null)
     const authenticated = ref(isAuthenticated() || false)
 
     const registerUser = async (data) => {
@@ -47,9 +47,19 @@ export const useAuthStore = defineStore('authStore',()=>{
         }
     }
 
+    const getUser = async(id) => {
+        try {
+            return await getUserAPI(id);
+        } catch (err) {
+            const data = err.response.data
+            notificationStore.notify( data.message, "error")
+            throw err
+        }
+    }
+
     const userParameters = async(id) => {
         try {
-            return await getParametersAPI(id);
+            return await getUserParametersAPI(id);
         } catch (err) {
             const data = err.response.data
             notificationStore.notify( data.message, "error")
@@ -58,7 +68,7 @@ export const useAuthStore = defineStore('authStore',()=>{
     }
 
     const logoutUser = () => {
-        localStorage.removeItem('user')
+        localStorage.removeItem('userId')
         router.push({name: 'auth-page'})
     }
 
@@ -68,6 +78,7 @@ export const useAuthStore = defineStore('authStore',()=>{
 
         loginUser,
         registerUser,
+        getUser,
         userParameters,
         logoutUser,
     };

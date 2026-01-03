@@ -38,7 +38,7 @@ import { sanitizeDate } from "@/stores/helpers";
 
 const workoutDetails = defineModel()
 watch(workoutDetails, () => {
-    console.log('workoutDetails: ', workoutDetails.value);
+    //console.log('workoutDetails: ', workoutDetails.value);
 })
 
 const exercises = computed(() => workoutDetails.value?.daily_exercise)
