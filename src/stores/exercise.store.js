@@ -1,6 +1,12 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { deleteAllExercisesAPI, deleteExerciseAPI, getExercisesAPI, postExercisesAPI } from "@/api/exercises-api";
+import { 
+    deleteAllExercisesAPI,
+    deleteExerciseAPI,
+    getExercisesAPI,
+    postExercisesAPI,
+    getExercisesByDayAPI
+} from "@/api/exercises-api";
 import { useAuthState } from "@/composables/auth";
 import { useNotificationStore } from "./notification.store";
 
@@ -18,6 +24,22 @@ export const useExerciseStore = defineStore( "exercise-store", () => {
             const response = await getExercisesAPI(userId.value)
             workoutHistory.value = response?.exercises
             return workoutHistory.value
+        } catch (err) {
+            console.error(err)
+            notificationStore.notify("Fetching exercises wasn't successful", "error")
+        }
+    }
+
+    const fetchDailyExercisesByDay = async(date) => {
+
+        try{
+            const data = {
+                id: userId.value,
+                date
+            }
+
+            const response = await getExercisesByDayAPI(data)
+            return response
         } catch (err) {
             console.error(err)
             notificationStore.notify("Fetching exercises wasn't successful", "error")
@@ -60,6 +82,7 @@ export const useExerciseStore = defineStore( "exercise-store", () => {
         showRunningModal,
         
         fetchDailyExercises,
+        fetchDailyExercisesByDay,
         addDailyExercises,
         deleteDailyExercise,
         deleteAllDailyExercises,

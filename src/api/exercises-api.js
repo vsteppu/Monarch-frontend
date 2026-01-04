@@ -7,6 +7,11 @@ const getExercisesAPI = async (id) => {
     return response?.data
 }
 
+const getExercisesByDayAPI = async (params) => {
+    const response = await axios.get(`${api}/get-exercises-by-day`, {params})
+    return response?.data
+}
+
 const postExercisesAPI = async (data) => {
     const response = await axios.post(`${api}/add-exercises`, data)
     return response?.data
@@ -23,6 +28,7 @@ const deleteAllExercisesAPI = async () => {
 
 export {
     getExercisesAPI,
+    getExercisesByDayAPI,
     postExercisesAPI,
     deleteExerciseAPI,
     deleteAllExercisesAPI

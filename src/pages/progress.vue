@@ -32,12 +32,20 @@
                         {{ setCalendar(day) }}
                     </div>
                 </div>
-                <FadeEffect>
-                    <WorkoutDetailsCard
-                        v-model="workoutDetails"
-                        :key="currentWorkout"
-                    />
-                </FadeEffect>
+                <div v-if="workouts.length !== 0" class="w-full">
+                    <div v-for="workout in workouts">
+                        <FadeEffect>
+                            <WorkoutDetailsCard
+                                v-if="workouts"
+                                :workout="workout"
+                                :key="currentWorkout"
+                            />
+                        </FadeEffect>
+                    </div>
+                </div>
+                <div v-else class="w-80 rounded p-6 flex flex-col font-extralight">
+                    No Registered Data
+                </div>
             </div>
         </div>
     </div>
@@ -60,28 +68,23 @@ const { calendar, monthToString, month, year, currentDay, selectedDay, setCalend
 const currentWorkout = ref(null);
 const workouts = ref([]);
 
-const workoutDetails = computed(() => workouts?.value[currentWorkout.value])
-
-const handleFetchExercises = async () => {
-    workouts.value = await exerciseStore.fetchDailyExercises();
-    currentWorkout.value = workouts.value.length - 1
-}
-
-const selectDayHandler = (day) => {
+const selectDayHandler = async(day) => {
     if (day <= 0) {
         previousMonthHandler()
     } else if (day > 31) {
         nextMonthHandler()
     }
-    const data = {
-        day,
-        month: month.value,
-        year: year.value,
-    }
+
+    const date = new Date(year.value, month.value, day).toDateString()
+
+    const response = await exerciseStore.fetchDailyExercisesByDay(date)
+    workouts.value = response.exercises
+
     selectedDay.value = day
 }
 
 onMounted(async() => {
-    await handleFetchExercises();
+    //await handleFetchExercises();
+    await selectDayHandler(currentDay)
 });
 </script>
