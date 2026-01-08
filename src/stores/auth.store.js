@@ -30,6 +30,7 @@ export const useAuthStore = defineStore('authStore',()=>{
     }
 
     const loginUser = async (data) => {
+
         try{
             const token = await googleToken.getToken();
             const { email, password } = data

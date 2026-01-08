@@ -32,28 +32,29 @@
     <Sidebar 
         v-if="showSidebar"
         v-model="showSidebar"
-        class="md:hidden"
+        class="md:hidden w-full"
     />
 </template>
-
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useAuthStore } from "@/stores/auth.store";
 
 import { storeToRefs } from "pinia";
 import FadeEffect from '@/effects/fade-effect.vue'
-import { useIsMobile } from "@/composables/is-mobile.js";
 import Logo from '@/assets/icons/logo.vue'
-import { Bars2Icon, XMarkIcon } from '@heroicons/vue/24/outline';
+import { Bars2Icon } from '@heroicons/vue/24/outline';
 import SidebarMenu from './sidebar-menu.vue'
 import Sidebar from './sidebar.vue'
+import { useRoute } from "vue-router";
 
+const route = useRoute();
 const authStore = useAuthStore();
-const { isMobile } = useIsMobile();
 const { authenticated } = storeToRefs(authStore)
 const showSidebar = ref(false)
 
 const displaySidebar = () => {
     showSidebar.value = !showSidebar.value
 }
+
+watch(() => route.path,() => showSidebar.value = false)
 </script>

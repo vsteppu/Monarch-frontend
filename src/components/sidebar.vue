@@ -1,8 +1,8 @@
 <template>
     <div 
-        class="w-full h-full px-4 fixed py-3 flex justify-between bg-black z-50"
+        class="w-full h-full px-4 fixed py-3 flex bg-black z-50"
     >
-        <div>
+        <div class="w-full">
             <router-link 
                 :to="{ name: 'home' }"
             >

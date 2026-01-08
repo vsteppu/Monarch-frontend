@@ -36,7 +36,7 @@
 <script setup>
 import { XMarkIcon } from "@heroicons/vue/24/outline";
 
-const emit = defineEmits(['closeRunningModal'])
+const emit = defineEmits(['closeModal'])
 const props = defineProps({
     containerHeight: {
         type: String,
@@ -57,6 +57,6 @@ const props = defineProps({
 })
 
 const closeModal = () => {
-    emit('closeRunningModal', false)
+    emit('closeModal', false)
 }
 </script>

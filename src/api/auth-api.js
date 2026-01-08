@@ -7,7 +7,7 @@ const { setUserId } = useAuthState()
 const registerAPI = async (user) => {
     const response = await axios.post(`${api}/register`, user)
     if (response?.data?.success) { 
-        setUserId(response?.data)
+        setUserId(response?.data?.user?.id)
     }
     return response?.data
 }
