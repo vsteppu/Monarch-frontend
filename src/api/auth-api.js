@@ -6,6 +6,7 @@ const { setUserId } = useAuthState()
 
 const registerAPI = async (user) => {
     const response = await axios.post(`${api}/register`, user)
+
     if (response?.data?.success) { 
         setUserId(response?.data?.user?.id)
     }
@@ -14,6 +15,16 @@ const registerAPI = async (user) => {
 
 const loginAPI = async (user) => {
     const response = await axios.post(`${api}/login`, user)
+
+    if (response?.data?.success) {
+        setUserId(response?.data?.user?.id)
+    }
+    return response?.data
+}
+
+const deleteAPI = async (id) => {
+    const response = await axios.delete(`${api}/delete/${id}`)
+
     if (response?.data?.success) {
         setUserId(response?.data?.user?.id)
     }
@@ -21,12 +32,14 @@ const loginAPI = async (user) => {
 }
 
 const getUserAPI = async (id) => {
-    const response = await axios.get(`${api}/user?id=${id}`)
+    const response = await axios.get(`${api}/get-user/${id}`)
+
     return response?.data
 }
 
 const getUserParametersAPI = async (id) => {
     const response = await axios.get(`${api}/parameters?id=${id}`)
+    
     return response?.data?.meta
 }
 
@@ -35,4 +48,5 @@ export {
     loginAPI,
     getUserAPI,
     getUserParametersAPI,
+    deleteAPI,
 }

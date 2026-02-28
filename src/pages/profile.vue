@@ -11,17 +11,17 @@
             <Divider />
             <div class="flex justify-between">
                 <span>Level</span>
-                <span>{{ parameters?.level }}</span>
+                <span>{{ user?.level }}</span>
             </div>
             <Divider />
             <div class="flex justify-between">
                 <span>Rank</span>
-                <span class="uppercase">{{ parameters?.rank }}</span>
+                <span class="uppercase">{{ user?.rank }}</span>
             </div>
             <Divider />
             <div class="flex justify-between">
                 <span>Status</span>
-                <span>{{ parameters?.status }}</span>
+                <span>{{ user?.status }}</span>
             </div>
             <Divider />
             <div class="flex justify-between text-red-400">
@@ -29,6 +29,12 @@
                 <span>None</span>
             </div>
             <Divider />
+            <button
+                @click="handleDeleteAccount"
+                class="cursor-pointer"
+            >
+                Delete Account
+            </button>
         </div>
         <div v-else>
             <Loading />
@@ -36,25 +42,27 @@
     </div>
 </template>
 <script setup>
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useAuthStore } from '@/stores/auth.store';
 import { useAuthState } from '@/composables/auth';
 import Divider from '@/components/divider.vue'
 import Loading from '@/assets/icons/loading.vue'
-import { storeToRefs } from 'pinia';
 
 const authStore = useAuthStore()
 const { getUserId } = useAuthState()
 
 const loading = ref(false)
 const user = ref(null)
-const parameters = ref(null)
+const id = ref(null)
+
+const handleDeleteAccount = async() => {
+    await authStore.deleteAccount(id.value)
+}
 
 onMounted(async() => {
     loading.value = true
-    const id = getUserId()
-    user.value = await authStore.getUser(id)
-    parameters.value = await authStore.userParameters(id)
-    if(parameters.value) loading.value = false
+    id.value = getUserId()
+    user.value = await authStore.getUser(id.value)
+    loading.value = false
 })
 </script>

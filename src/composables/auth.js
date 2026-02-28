@@ -10,8 +10,8 @@ export const useAuthState = () => {
     }
 
     const getUserId = () => {
-            const userStatus = JSON.parse(localStorage.getItem('userId'))
-            return userStatus.id
+        const userStatus = JSON.parse(localStorage.getItem('userId'))
+        return userStatus.id
     }
 
 
