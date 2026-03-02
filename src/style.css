@@ -4,8 +4,9 @@
 @config "../tailwind.config.js";
 
 body {
-    background-color: #0c0a09;
-    color: white;
+    /* background-color: #0c0a09; */
+    /* color: white; */
+    color: black;
     font-family: 'Montserrat', 'sans-serif';
 }
 

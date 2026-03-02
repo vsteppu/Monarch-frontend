@@ -7,7 +7,7 @@
                 :to="{ name: 'home' }"
             >
                 <span
-                    class="font-extrabold text-2xl"
+                    class="font-extrabold text-2xl text-white"
                 >
                     MONARCH
                 </span>
@@ -21,7 +21,7 @@
             <FadeEffect>
                 <XMarkIcon
                     @click="closeSidebar"
-                    class="size-6 cursor-pointer"
+                    class="size-6 cursor-pointer text-white"
                 />
             </FadeEffect>
         </div>
@@ -36,7 +36,7 @@ import { storeToRefs } from "pinia";
 import FadeEffect from '@/effects/fade-effect.vue'
 import { useIsMobile } from "@/composables/is-mobile.js";
 import Logo from '@/assets/icons/logo.vue'
-import { ArrowRightStartOnRectangleIcon, Bars2Icon, XMarkIcon } from '@heroicons/vue/24/outline';
+import { XMarkIcon } from '@heroicons/vue/24/outline';
 import SidebarMenu from './sidebar-menu.vue'
 
 const authStore = useAuthStore();

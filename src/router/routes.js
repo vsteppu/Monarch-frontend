@@ -1,7 +1,7 @@
 import Home from '@/pages/home.vue'
 import AuthPage from '@/pages/auth/auth-page.vue'
-import Progress from '@/pages/progress.vue'
-import Workouts from '@/pages/workouts.vue'
+import Gallery from '@/pages/gallery.vue'
+import RequestProject from '@/pages/request-project.vue'
 import Running from '@/pages/running.vue'
 import DailyExercises from '@/pages/daily-exercises.vue'
 import Profile from '@/pages/profile.vue'
@@ -17,19 +17,19 @@ const routes = [
         path: '/', 
         component: Home,
         name: 'home',
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: false }
     },
     {
-        path: '/progress', 
-        component: Progress,
-        name: 'progress',
-        meta: { requiresAuth: true }
+        path: '/gallery', 
+        component: Gallery,
+        name: 'gallery',
+        meta: { requiresAuth: false }
     },
     { 
-        path: '/workouts', 
-        component: Workouts,
-        name: 'workouts',
-        meta: { requiresAuth: true }
+        path: '/request-project', 
+        component: RequestProject,
+        name: 'request-project',
+        meta: { requiresAuth: false }
     },
     { 
         path: '/running', 

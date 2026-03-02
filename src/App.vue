@@ -1,25 +1,24 @@
 <template>
     <notification />
-    <NavBar/>
-    <router-view />
+
+    <component 
+        :is="layout" 
+        :key="layout"
+    >
+        <router-view />
+    </component>
+
     <Feedback v-if="showFeedback"/>
     <div id="reCaptchaContainer"></div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { shallowRef } from 'vue';
+import defaultLayout from './layouts/default.vue';
 import Notification from './components/notification.vue'
-import NavBar from './components/nav-bar.vue'
-import { useMapTilerStore } from './stores/useMapTiler.store';
-import { storeToRefs } from 'pinia';
 import Feedback from './components/feedback.vue'
-import { useAuthStore } from './stores/auth.store';
-import { useAuthState } from './composables/auth';
 
-const authStore = useAuthStore()
-const mapTilerStore = useMapTilerStore()
-const { getUserId } = useAuthState()
-const { geoLocation } = storeToRefs(mapTilerStore)
+const layout = shallowRef(defaultLayout);
 </script>
 
 <style scooped>

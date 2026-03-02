@@ -3,29 +3,21 @@
         <div class="fixed top-0 h-full flex justify-center items-center w-full z-10 ">
             <div 
                 :class="[
-                    containerHeight,
-                    containerWidth,
-                    containerColor,
-                    'p-6 flex flex-col'
+                    'p-1 flex flex-col justify-center items-center m-32 bg-white'
                 ]"
             >
-                <div class="w-full flex items-center justify-between text-2xl font-bold mb-4">
-                    <slot name="header"/>
+                <div class="relative">
                     <div
                         @click="closeModal"
-                        class="cursor-pointer" 
+                        class="cursor-pointer absolute top-3 right-3 justify-end flex" 
                     >
-                        <XMarkIcon class="size-8"/>
+                        <XMarkIcon class="size-8 bg-white"/>
                     </div>
-                </div>
-                <div :class="[
-
-                    'w-full flex grow text-xl text-stone-300 font-thin'
-                ]">
-                    <slot name="content"/>
-                </div>
-                <div class="w-full text-xl text-stone-300 font-thin">
-                    <slot name="actions"/>
+                    <div :class="[
+                        'flex max-h-[80vh] mx-auto'
+                    ]">
+                        <slot name="content"/>
+                    </div>
                 </div>
             </div>
         </div>
@@ -48,7 +40,7 @@ const props = defineProps({
     },
     containerColor: {
         type: String,
-        default: 'bg-black'
+        default: 'bg-white'
     },
     contentTextColor: {
         type: String,

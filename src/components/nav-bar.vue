@@ -1,8 +1,8 @@
 <template>
     <div 
-        v-if="authenticated && !showSidebar"
+        v-if="!showSidebar"
         :class="[
-            'w-full h-14 fixed py-3 flex justify-between items-center px-4 md:px-20 z-100'
+            'w-full h-14 bg-white fixed py-3 flex justify-between items-center px-4 md:px-20 z-100'
         ]"
     >
         <router-link 
@@ -11,7 +11,7 @@
             <span
                 class="font-extrabold hidden md:block text-2xl"
             >
-                MONARCH
+                MAINCHARACTER
             </span>
             <Logo 
                 class="size-10 md:hidden"

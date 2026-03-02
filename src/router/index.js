@@ -8,11 +8,11 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach((to, from) => {
-    const authenticated = isAuthenticated()
-
-    if ( authenticated && to.name === 'login') return { name: "home" }
-    if ( !authenticated && to.meta.requiresAuth === true ) return { name: "auth-page" }
-});
+//router.beforeEach((to, from) => {
+//    const authenticated = isAuthenticated()
+//
+//    if ( authenticated && to.name === 'login') return { name: "home" }
+//    if ( !authenticated && to.meta.requiresAuth === true ) return { name: "auth-page" }
+//});
 
 export default router;
