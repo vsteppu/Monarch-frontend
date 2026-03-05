@@ -7,8 +7,8 @@
             <Loading />
         </div>
         <div
-            v-else
-            class="w-full flex"
+            class="w-full"
+            :class="loading ? 'hidden' : 'flex'"
         >
             <div
                 class="bg-white/85 flex gap-1 flex-wrap items-center justify-center"
@@ -21,6 +21,7 @@
                         alt=""
                         class="max-h-60"
                         @click="openImage(value.url)"
+                        @load="imageSetLoaded"
                     >
                 </div>
             </div>
@@ -40,7 +41,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useRouter, useRoute } from "vue-router";
 
@@ -53,14 +54,9 @@ import { XMarkIcon } from "@heroicons/vue/24/outline";
 const router = useRouter();
 const route = useRoute();
 const galleryStore = useGalleryStore();
-const { gallery, loading } = storeToRefs(galleryStore);
+const { folder, loading, image } = storeToRefs(galleryStore);
 
-const image = ref(null);
 const showImageModal = ref(false);
-
-const folder = computed(() => {
-    return gallery.value[route.query.folderId] || [];
-});
 
 const openImage = (url) => {
     image.value = url;
@@ -88,10 +84,15 @@ const prevImage = () => {
 
 const closeImage = () => {
     showImageModal.value = false;
-    console.log('showImageModal.value: ', showImageModal.value);
 }
 
 const closeFolder = () => {
     router.push({ name: "gallery" });
 }
+
+const imageSetLoaded = () => {
+    galleryStore.imageLoaded(folder.value.length)
+}
+
+onMounted(() => { loading.value = true })
 </script>

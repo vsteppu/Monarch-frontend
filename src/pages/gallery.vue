@@ -7,13 +7,13 @@
     </div>
 
     <div
-        v-else
-        class="flex flex-wrap gap-2 items-center justify-center"
+        class="flex-wrap gap-2 items-center justify-center"
+        :class="loading ? 'hidden' : 'flex'"
     >
         <div
             v-for="(folder, key) in gallery"
             :key="key"
-            class=""
+            :class="loading ? 'hidden' : ''"
         >
             <div
                 @click="openFolder(key)"
@@ -23,6 +23,7 @@
                     :src="folder[0].url"
                     alt=""
                     class="h-60"
+                    @load="imageSetLoaded"
                 />
             </div>
         </div>
@@ -30,32 +31,26 @@
 </template>
 
 <script setup>
-import { onMounted, computed, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { storeToRefs } from "pinia";
-import { useRouter, useRoute } from "vue-router";
-
+import { useRouter } from "vue-router";
 import { useGalleryStore } from "@/stores/gallery.store";
-
-import GalleryFolder from "@/components/gallery-folder.vue";
 import Loading from "@/assets/icons/loading.vue";
 
 const router = useRouter();
-const route = useRoute();
 const galleryStore = useGalleryStore();
-const { gallery } = storeToRefs(galleryStore);
-
-const displayFolder = ref("none");
-
-const loading = computed(
-    () => !gallery.value || Object.keys(gallery.value).length === 0
-);
+const { gallery, loading } = storeToRefs(galleryStore);
 
 const openFolder = (key) => {
-    displayFolder.value = gallery.value[key];
     router.push({ name: "gallery.folder", query: { folderId: key } });
 };
 
-//onMounted(async () => {
-//    await galleryStore.fetchGalleryHandler();
-//});
+const imageSetLoaded = () => {
+    const keys = Object.keys(gallery.value).length
+    galleryStore.imageLoaded(keys)
+}
+
+onMounted(() => { 
+    loading.value = true
+})
 </script>

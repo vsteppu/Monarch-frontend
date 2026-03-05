@@ -11,7 +11,7 @@
             />
             <img 
                 :src="image" 
-                class="mx-auto h-full"
+                class="mx-auto h-full max-w-fit"
             />
             <ChevronRightIcon
                 class="cursor-pointer absolute right-0 min-w-20 size-20 text-white opacity-50 hover:opacity-100"

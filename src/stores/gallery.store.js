@@ -1,18 +1,25 @@
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { defineStore } from "pinia";
 import { getImagesAPI } from "@/api/gallery-api";
 import { useNotificationStore } from "./notification.store";
+import { useRoute } from "vue-router";
 
 export const useGalleryStore = defineStore("gallery", () => {
+    const route = useRoute();
     const notificationStore = useNotificationStore();
     const gallery = ref([]);
-    const loading = ref(false);
+    const image = ref(null)
+    const loading = ref(false)
+    const loadedCount = ref(0)
+    
+    const folder = computed(() => {
+        return gallery.value[route.query.folderId] || [];
+    });
+
 
     const fetchGalleryHandler = async() => {
-        loading.value = true;
         try {
             gallery.value = await getImagesAPI();
-            loading.value = false;
             return gallery.value;
         } catch (error) {
             console.error('Error fetching gallery images:', error);
@@ -20,15 +27,25 @@ export const useGalleryStore = defineStore("gallery", () => {
         }
     }
 
-    onMounted(async() => {
-        console.log('bvjhvjv');
-        await fetchGalleryHandler();
-    });
+    const imageLoaded = (arrLength) => {
+        loadedCount.value++
+        if (loadedCount.value === arrLength) {
+            loading.value = false
+            loadedCount.value = 0
+            return loading.value
+        }
+    }
+
+    onMounted(async() => { await fetchGalleryHandler() });
 
     return {
         gallery,
+        loadedCount,
+        folder,
         loading,
+        image,
 
-        fetchGalleryHandler
+        fetchGalleryHandler,
+        imageLoaded,
     }
 });
