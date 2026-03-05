@@ -1,10 +1,12 @@
 import Home from '@/pages/home.vue'
 import AuthPage from '@/pages/auth/auth-page.vue'
-import Gallery from '@/pages/gallery.vue'
 import RequestProject from '@/pages/request-project.vue'
+import Gallery from '@/pages/gallery.vue'
 import Running from '@/pages/running.vue'
 import DailyExercises from '@/pages/daily-exercises.vue'
 import Profile from '@/pages/profile.vue'
+
+import GalleryFolder from '@/components/gallery-folder.vue'
 
 const routes = [
     { 
@@ -23,6 +25,12 @@ const routes = [
         path: '/gallery', 
         component: Gallery,
         name: 'gallery',
+        meta: { requiresAuth: false }
+    },
+    {
+        path: '/gallery-folder/:id?',
+        component: GalleryFolder,
+        name: 'gallery.folder',
         meta: { requiresAuth: false }
     },
     { 

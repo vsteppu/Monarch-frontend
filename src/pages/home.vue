@@ -31,12 +31,12 @@
                 class="absolute gap-4 text-black font-extrabold mt-6 flex p-1 items-center"
             >
                 <router-link
-                    :to="{ name: 'gallery' }"
+                    :to="{ path: '/gallery-folder', query: { folderId: '004' } }"
                 >
                     <div
                         class="opacity-100 bg-orange-200 text-black font-extrabold p-2 whitespace-nowrap"
                     >
-                        Go to Projects
+                        Go to Project
                     </div>
                 </router-link>
             </div>
@@ -57,7 +57,7 @@ import { storeToRefs } from "pinia";
 import Loading from "@/assets/icons/loading.vue";
 
 const galleryStore = useGalleryStore()
-const { gallery } = storeToRefs(galleryStore)
+const { gallery, loading } = storeToRefs(galleryStore)
 
 const headImage = computed(() => gallery.value['004']?.[0]?.url)
 </script>

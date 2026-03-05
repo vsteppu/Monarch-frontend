@@ -33,7 +33,6 @@ export const useAuthStore = defineStore('authStore',()=>{
         const { email, password } = data
 
         try{
-            //const token = await googleToken.getToken();
             const response = await loginAPI({ email, password });
 
             if (response.success) {
