@@ -54,7 +54,7 @@ import { XMarkIcon } from "@heroicons/vue/24/outline";
 const router = useRouter();
 const route = useRoute();
 const galleryStore = useGalleryStore();
-const { folder, loading, image } = storeToRefs(galleryStore);
+const { folder, loading, image, loadedCount } = storeToRefs(galleryStore);
 
 const showImageModal = ref(false);
 
@@ -88,6 +88,7 @@ const closeImage = () => {
 
 const closeFolder = () => {
     router.push({ name: "gallery" });
+    loadedCount.value = 0
 }
 
 const imageSetLoaded = () => {
